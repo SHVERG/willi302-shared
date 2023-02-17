@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/sim_fphys_willi302_shared/glass_black"
+	"$bumpmap"    "models/sim_fphys_willi302_shared/glass_n"
+	"$nodecal" "1"
+	"$translucent" 1
+	"$phong" 1
+	"$phongboost" "1"
+	"$phongexponent" 2
+	"$envmap" "env_cubemap"
+	"$envmapfresnel" "1.0"
+	"$phongfresnelranges" "[0.01 0.35 3.0]"
+	"$colorfix" "{100 100 100}"
+	"Proxies"
+	{
+		"Equals"
+		{
+			srcVar1 $colorfix
+			resultVar	$color
+		}
+	}
+}

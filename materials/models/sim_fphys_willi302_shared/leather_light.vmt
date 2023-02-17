@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/sim_fphys_willi302_shared/leather_light"
+	"$bumpmap" "models/sim_fphys_willi302_shared/leather_light_n"
+	"$nodecal" "1"
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost"	"0.2"
+	"$phongfresnelranges" "[.1 .8 .8]"
+
+	"$colorfix" "{255 255 255}"
+	"Proxies"
+	{
+		"Equals"
+		{
+			srcVar1 $colorfix
+			resultVar	$color
+		}
+	}
+}
+
+
+

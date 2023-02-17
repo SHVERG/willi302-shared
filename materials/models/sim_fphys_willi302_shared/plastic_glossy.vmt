@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+
+	 $color2 "{120 120 120}"
+	"$basetexture" "models/sim_fphys_willi302_shared/chrome" 
+	"$bumpmap" "models/sim_fphys_willi302_shared/chrome_n" 
+	"$nodecal" "1" 
+	"$nocull" "1"
+	"$phong" "1" 
+	"$phongboost" "0.5" 
+	"$phongfresnelranges" "[3 3 3]" 
+	"$phongexponent" 150 
+	"$envmap" "env_cubemap" 
+	"$envmaptint" "[0.1 0.1 0.1]" 
+	"$halflambert" 1 
+	"$colorfix" "{200 200 200}" 
+	"Proxies" 
+	{ 
+		"Equals" 
+		{ 
+		srcVar1 $colorfix 
+		resultVar $color 
+		} 
+	} 
+}

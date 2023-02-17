@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/sim_fphys_willi302_shared/alcantara2"
+	"$nodecal" "1"
+	"$phong" "1"
+	"$nocull" "1"
+	"$phongexponent" "27"
+	"$phongboost"	"1.3"
+	"$phongfresnelranges" "[ 0 0 0]"
+	"$phongfix" "{0 0 0}"
+	"$colorfix" "{255 255 255}"
+	"Proxies"
+	{
+		"Equals"
+		{
+			srcVar1 $colorfix
+			resultVar	$color
+		}
+	}
+}
+
+
+

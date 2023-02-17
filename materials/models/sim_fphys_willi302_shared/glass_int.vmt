@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/sim_fphys_willi302_shared/glass_int"
+	"$nodecal" "1"
+	"$translucent" "1"
+	"$colorfix" "[1 1 1]"
+	"Proxies"
+	{
+		"Equals"
+		{
+			srcVar1 $colorfix
+			resultVar	$color
+		}
+	}
+}

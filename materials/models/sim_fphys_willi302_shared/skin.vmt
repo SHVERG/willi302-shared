@@ -1,0 +1,45 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/sim_fphys_willi302_shared/skin"
+	"$bumpmap" "models/sim_fphys_willi302_shared/skin_n"
+	"$nodecal" "1"
+	"$phong" "1"
+	"$nocull" "1"
+	"$phongexponent" "27"
+	"$phongboost"	"1.3"
+	"$envmap" "env_cubemap"
+	"$envmapfresnel" "1.65"
+	"$phongfresnelranges" "[.4 .7 .74]"
+	"$envmaptint" "[0.2 0.2 0.2]"
+	//"$rimlight" "1"
+	//"$rimlightboost" "1"
+	"$phongfix" "{150 150 150}"
+
+	Proxies
+	{
+		Equals
+		{
+			srcVar1	$color
+			resultVar	$phongtint
+		}
+		Add
+		{
+			srcVar1 $phongfix
+			srcVar2 $phongtint
+			resultVar $phongtint
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
