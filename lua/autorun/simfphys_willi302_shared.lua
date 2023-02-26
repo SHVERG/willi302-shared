@@ -527,6 +527,30 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	ariel_nomad = {
+		model = "models/sim_fphys_ariel_nomad/ariel_nomad.mdl",
+		degree = 2*65,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	maserati_type60 = {
+		model = "models/jmcars/maserati/type60/type60.mdl",
+		degree = 2*65,
+		bone = "steer-w_bone",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
+	rolls_royce_silver_spirit_mk3 = {
+		model = "models/crsk_autos/rolls-royce/silverspiritmk3.mdl",
+		degree = 2*65,
+		bone = "Rig_Buggy.Steer_Wheel",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 }
 
 local vehs_routes = {
