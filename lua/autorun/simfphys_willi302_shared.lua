@@ -1,4 +1,12 @@
 local vehs_steering = {
+	kamaz_6282 = {
+		model = "models/sim_fphys_kamaz-6282/kamaz-6282.mdl",
+		degree = 2*65,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	liaz_5292_22 = {
 		model = "models/sim_fphys_liaz_5292-22/liaz_5292-22.mdl",
 		degree = 2*70,
@@ -9,6 +17,14 @@ local vehs_steering = {
 	},
 	liaz_5292_30 = {
 		model = "models/sim_fphys_liaz_5292-30/liaz_5292-30.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	maz_152a = {
+		model = "models/sim_fphys_maz_152a/maz_152a.mdl",
 		degree = 2*70,
 		bone = "steer_w",
 		angle_p = 0,
