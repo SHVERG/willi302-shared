@@ -175,6 +175,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	chev_monte_carlo = {
+		model = "models/wizwagons/chevrolet/montecarlo1988.mdl",
+		degree = 2*50,
+		bone = "steering",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	willys_sw = {
 		model = "models/sim_fphys_willys_sw/willys_sw.mdl",
 		degree = 2*70,
