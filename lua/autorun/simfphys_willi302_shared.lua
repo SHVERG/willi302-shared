@@ -1224,9 +1224,9 @@ if CLIENT then
 		extended = true
 	})
 	
-	CreateClientConVar("simfphys_extended_steering_enabled", "0", true, false)
-	CreateClientConVar("simfphys_extended_steering_degree", "900", true, false, "Sets the degree of steering wheel", 0, 2000)
-	CreateClientConVar("simfphys_extended_steering_smoothness", "0.8", true, false, "Sets the smoothness of steering", 0, 1)
+	CreateClientConVar("simfphys_advanced_steering_enabled", "0", true, false)
+	CreateClientConVar("simfphys_advanced_steering_degree", "900", true, false, "Sets the degree of steering wheel", 0, 2000)
+	CreateClientConVar("simfphys_advanced_steering_smoothness", "0.8", true, false, "Sets the smoothness of steering", 0, 1)
 	
 	hook.Add( "InitPostEntity", "Ready", function()
 		net.Start( "Simfphys_Routes_Client_Ready" )
@@ -1293,18 +1293,18 @@ if CLIENT then
 				end
 			end
 			
-			if !GetConVar("simfphys_extended_steering_enabled"):GetBool() then return end
+			if !GetConVar("simfphys_advanced_steering_enabled"):GetBool() then return end
 			
 			for m, veh in pairs(vehs_steering) do
 				if v:GetModel() == veh.model then
-					local degree = GetConVar("simfphys_extended_steering_degree"):GetInt()
+					local degree = GetConVar("simfphys_advanced_steering_degree"):GetInt()
 					local degree_cust = -v:GetVehicleSteer()*(degree - veh.degree)/2
 					
-					if !v.extended_steering_degree then v.extended_steering_degree = 0 end
+					if !v.advanced_steering_degree then v.advanced_steering_degree = 0 end
 					
-					v.extended_steering_degree = Lerp(1-GetConVar("simfphys_extended_steering_smoothness"):GetFloat(), v.extended_steering_degree, degree_cust)
+					v.advanced_steering_degree = Lerp(1-GetConVar("simfphys_advanced_steering_smoothness"):GetFloat(), v.advanced_steering_degree, degree_cust)
 					
-					v:ManipulateBoneAngles(v:LookupBone(veh.bone), Angle( v.extended_steering_degree*veh.angle_p, v.extended_steering_degree*veh.angle_y, v.extended_steering_degree*veh.angle_r ))
+					v:ManipulateBoneAngles(v:LookupBone(veh.bone), Angle( v.advanced_steering_degree*veh.angle_p, v.advanced_steering_degree*veh.angle_y, v.advanced_steering_degree*veh.angle_r ))
 				end
 			end
 			
