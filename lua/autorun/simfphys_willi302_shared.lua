@@ -543,6 +543,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	ford_svt_cobra = {
+		model = "models/simfphys_lonewolfie/ford_foxbody_stock.mdl",
+		degree = 2*85,
+		bone = "steerwheel1",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
 	porsche_935 = {
 		model = "models/sim_fphys_porsche935/porsche935.mdl",
 		degree = 2*65,
@@ -1218,6 +1226,7 @@ if CLIENT then
 	
 	CreateClientConVar("simfphys_extended_steering_enabled", "0", true, false)
 	CreateClientConVar("simfphys_extended_steering_degree", "900", true, false, "Sets the degree of steering wheel", 0, 2000)
+	CreateClientConVar("simfphys_extended_steering_smoothness", "0.8", true, false, "Sets the smoothness of steering", 0, 1)
 	
 	hook.Add( "InitPostEntity", "Ready", function()
 		net.Start( "Simfphys_Routes_Client_Ready" )
@@ -1293,7 +1302,7 @@ if CLIENT then
 					
 					if !v.extended_steering_degree then v.extended_steering_degree = 0 end
 					
-					v.extended_steering_degree = Lerp(0.03, v.extended_steering_degree, degree_cust)
+					v.extended_steering_degree = Lerp(1-GetConVar("simfphys_extended_steering_smoothness"):GetFloat(), v.extended_steering_degree, degree_cust)
 					
 					v:ManipulateBoneAngles(v:LookupBone(veh.bone), Angle( v.extended_steering_degree*veh.angle_p, v.extended_steering_degree*veh.angle_y, v.extended_steering_degree*veh.angle_r ))
 				end
