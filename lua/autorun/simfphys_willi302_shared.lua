@@ -447,6 +447,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	bmw_f90_comp = {
+		model = "models/sim_fphys_bmw_m5_comp_21/bmw_m5_comp_21.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	hyundai_solaris = {
 		model = "models/crsk_autos/hyundai/solaris_2010.mdl",
 		degree = 2*90,
@@ -559,9 +567,33 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	lam_hur_evo = {
+		model = "models/sim_fphys_lam_huracan_evo/lam_huracan_evo.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	koen_one1 = {
+		model = "models/sim_fphys_koenigsegg_one1/koenigsegg_one1.mdl",
+		degree = 2*70,
+		bone = "steer_w_bone",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	ariel_nomad = {
 		model = "models/sim_fphys_ariel_nomad/ariel_nomad.mdl",
 		degree = 2*65,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	mazda_rx7_fd = {
+		model = "models/sim_fphys_mazda_rx7_fd_spirit_r/mazda_rx7_fd_spirit_r.mdl",
+		degree = 2*70,
 		bone = "steer_w",
 		angle_p = 0,
 		angle_y = 1,
