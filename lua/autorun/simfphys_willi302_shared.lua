@@ -487,6 +487,14 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 1
 	},
+	toyota_supra_mk4 = {
+		model = "models/sim_fphys_toyota_supra_mk4/toyota_supra_mk4.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	toyota_camry_xv55 = {
 		model = "models/sim_fphys_toyota_camry55/toyota_camry55.mdl",
 		degree = 2*70,
