@@ -335,6 +335,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	gaz_m21 = {
+		model = "models/sim_fphys_gaz_m21/gaz_m21.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	uaz_hunter = {
 		model = "models/sim_fphys_uaz_hunter/uaz_hunter.mdl",
 		degree = 2*75,
@@ -407,6 +415,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	divco_model_u = {
+		model = "models/sim_fphys_divco_milk_truck/divco_milk_truck.mdl",
+		degree = 2*35,
+		bone = "steer_bone",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	daewoo_lanos_sport = {
 		model = "models/sim_fphys_daewoo_lanos_sport/daewoo_lanos_sport.mdl",
 		degree = 2*70,
@@ -427,6 +443,14 @@ local vehs_steering = {
 		model = "models/sim_fphys_mercedes_benz_560sec/mercedes_benz_560sec.mdl",
 		degree = 2*65,
 		bone = "steer_w_bone",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
+	mercedes_zetros = {
+		model = "models/sim_fphys_mercedes_zetros_6x6_cv/mercedes_zetros_6x6_cv.mdl",
+		degree = 2*70,
+		bone = "steer_w",
 		angle_p = 1,
 		angle_y = 0,
 		angle_r = 0
