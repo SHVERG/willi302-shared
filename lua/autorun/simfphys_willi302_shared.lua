@@ -447,6 +447,14 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	mercedes_w126 = {
+		model = "models/crsk_autos/mercedes-benz/560sel_1985.mdl",
+		degree = 2*85,
+		bone = "Rul",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	mercedes_zetros = {
 		model = "models/sim_fphys_mercedes_zetros_6x6_cv/mercedes_zetros_6x6_cv.mdl",
 		degree = 2*70,
