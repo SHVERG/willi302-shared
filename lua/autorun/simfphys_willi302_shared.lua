@@ -167,6 +167,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	ford_f700 = {
+		model = "models/wizwagons/ford/f700-1995.mdl",
+		degree = 2*45,
+		bone = "Steering",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	oldsmobile_delta88 = {
 		model = "models/whitetiger/oldsmobile88delta.mdl",
 		degree = 2*40,
