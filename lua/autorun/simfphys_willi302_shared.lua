@@ -23,6 +23,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	liaz_5292_65 = {
+		model = "models/sim_fphys_liaz_5292-65/liaz_5292-65.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	maz_152a = {
 		model = "models/sim_fphys_maz_152a/maz_152a.mdl",
 		degree = 2*70,
@@ -155,6 +163,14 @@ local vehs_steering = {
 		model = "models/sim_fphys_gmc_suburban89/gmc_suburban89.mdl",
 		degree = 2*70,
 		bone = "steer_w_bone",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
+	ford_mustang_boss302 = {
+		model = "models/wizwagons/ford/mustang1969.mdl",
+		degree = 2*45,
+		bone = "Steering",
 		angle_p = 1,
 		angle_y = 0,
 		angle_r = 0
@@ -743,6 +759,81 @@ local vehs_routes = {
 	},
 	liaz_5292_30 = { 
 		model = "models/sim_fphys_liaz_5292-30/liaz_5292-30.mdl",
+		color = Color(255, 150, 0),
+		font = "Routes2",
+		nums = {
+			{
+				pos = Vector(16.725, 255.9, 113.8)*0.96,
+				ang = Angle(180, 0, -90),
+				size = 0.045*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.95, 63.48, 100.8)*0.96,
+				ang = Angle(180, -90, -90),
+				size = 0.037*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(30.7, -274.4, 101.5)*0.96,
+				ang = Angle(180, 180, -90),
+				size = 0.04*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		letters = {
+			{
+				pos = Vector(14.7, 255.9, 112.0)*0.96,
+				ang = Angle(180, 0, -90),
+				size = 0.02*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.95, 65.13, 99.15)*0.96,
+				ang = Angle(180, -90, -90),
+				size = 0.017*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(32.5, -274.4, 99.9)*0.96,
+				ang = Angle(180, 180, -90),
+				size = 0.017*0.96,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		routes = {
+			first = {
+				{
+					pos = Vector(-8.95, 255.9, 115.0)*0.96,
+					ang = Angle(180, 0, -90),
+					size = 0.0302*0.96,
+					align = TEXT_ALIGN_CENTER,
+				},
+				{
+					pos = Vector(52.95, 84.6, 101.75)*0.96,
+					ang = Angle(180, -90, -90),
+					size = 0.0248*0.96,
+					align = TEXT_ALIGN_CENTER,
+				},
+			},
+			last = {
+				{
+					pos = Vector(-8.95, 255.9, 110.65)*0.96,
+					ang = Angle(180, 0, -90),
+					size = 0.0302*0.96,
+					align = TEXT_ALIGN_CENTER,
+				},
+				{
+					pos = Vector(52.95, 84.6, 97.85)*0.96,
+					ang = Angle(180, -90, -90),
+					size = 0.0248*0.96,
+					align = TEXT_ALIGN_CENTER,
+				},
+			},
+		}
+	},
+	liaz_5292_65 = { 
+		model = "models/sim_fphys_liaz_5292-65/liaz_5292-65.mdl",
 		color = Color(255, 150, 0),
 		font = "Routes2",
 		nums = {
