@@ -757,6 +757,7 @@ local vehs_routes = {
 			},
 		}
 	},
+	
 	liaz_5292_30 = { 
 		model = "models/sim_fphys_liaz_5292-30/liaz_5292-30.mdl",
 		color = Color(255, 150, 0),
@@ -832,9 +833,10 @@ local vehs_routes = {
 			},
 		}
 	},
+	
 	liaz_5292_65 = { 
 		model = "models/sim_fphys_liaz_5292-65/liaz_5292-65.mdl",
-		color = Color(255, 150, 0),
+		color = Color(225, 255, 100),
 		font = "Routes2",
 		nums = {
 			{
@@ -907,6 +909,7 @@ local vehs_routes = {
 			},
 		}
 	},
+	
 	nefaz_5299_40_57 = {
 		model = "models/sim_fphys_nefaz_5299-40-57/nefaz_5299-40-57.mdl",
 		color = Color(255, 150, 0),
