@@ -87,6 +87,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	honda_civic_si = {
+		model = "models/sentry/civicsi.mdl",
+		degree = 2*40,
+		bone = "steeringwheel",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
 	hyundai_county = {
 		model = "models/sim_fphys_hyundai_county/hyundai_county.mdl",
 		degree = 2*70,
