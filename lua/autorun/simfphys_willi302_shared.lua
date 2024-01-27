@@ -119,6 +119,14 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	ford_ltd_crown87 = {
+		model = "models/sentry/87ltd.mdl",
+		degree = 2*35,
+		bone = "steeringwheel",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
 	ford_ltd_lx = {
 		model = "models/crsk_autos/ford/ltd_lx_1986.mdl",
 		degree = 2*70,
