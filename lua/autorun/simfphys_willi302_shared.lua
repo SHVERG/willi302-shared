@@ -111,6 +111,30 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	ford_f150_xl = {
+		model = "models/sentry/86f150.mdl",
+		degree = 2*35,
+		bone = "steeringwheel",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
+	ford_f150_xl_amb = {
+		model = "models/sentry/86f150_ambu.mdl",
+		degree = 2*35,
+		bone = "steeringwheel",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
+	ford_f150_xl_crew = {
+		model = "models/sentry/86f150_crew.mdl",
+		degree = 2*35,
+		bone = "steeringwheel",
+		angle_p = 0,
+		angle_y = 0,
+		angle_r = 1
+	},
 	ford_f700 = {
 		model = "models/wizwagons/ford/f700-1995.mdl",
 		degree = 2*45,
