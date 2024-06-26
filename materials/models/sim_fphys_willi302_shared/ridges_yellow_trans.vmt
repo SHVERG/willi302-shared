@@ -1,0 +1,20 @@
+"Refract"
+{
+	"$model" 1
+	"$refractamount" "0.025"
+	"$refracttint" "{255 200 100}"
+	"$nowritez" "1"
+	"$dudvmap" "models/sim_fphys_willi302_shared/ridges_n"
+	"$normalmap" "models/sim_fphys_willi302_shared/ridges_n"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.5 0.5 0.5]"
+	"$carpenisenabled" "1"
+	"Proxies"
+	{
+		"Equals"
+		{
+			srcVar1 $carpenisenabled
+			resultVar	$color
+		}
+	}
+}

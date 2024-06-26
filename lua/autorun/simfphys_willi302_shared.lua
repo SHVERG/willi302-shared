@@ -703,6 +703,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	volkswagen_santana = {
+		model = "models/sim_fphys_volkswagen_santana/volkswagen_santana.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	willys_sw = {
 		model = "models/sim_fphys_willys_sw/willys_sw.mdl",
 		degree = 2*70,
