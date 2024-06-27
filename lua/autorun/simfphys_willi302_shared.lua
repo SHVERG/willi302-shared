@@ -111,6 +111,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	flora_itagin_hd45 = {
+		model = "models/sim_fphys_flora_itagin_hd45/flora_itagin_hd45.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	ford_f150_xl = {
 		model = "models/sentry/86f150.mdl",
 		degree = 2*35,
