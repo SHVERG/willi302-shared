@@ -327,6 +327,22 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 1
 	},
+	liaz_4292_60 = {
+		model = "models/sim_fphys_liaz_4292-60/liaz_4292-60.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	liaz_4292_60_new = {
+		model = "models/sim_fphys_liaz_4292-60/liaz_4292-60_new.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	liaz_5292_22 = {
 		model = "models/sim_fphys_liaz_5292-22/liaz_5292-22.mdl",
 		degree = 2*70,
@@ -746,10 +762,163 @@ local vehs_steering = {
 }
 
 local vehs_routes = {
+	liaz_4292_60 = { 
+		model = "models/sim_fphys_liaz_4292-60/liaz_4292-60.mdl",
+		color = Color(255, 150, 0),
+		routes_font = "Led5x7",
+		nums_font = "Led7x16",
+		nums = {
+			{
+				pos = Vector(16.9, 190, 117.2),
+				ang = Angle(180, 0, -90),
+				size = 0.053,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.8, 23.7, 102.1),
+				ang = Angle(180, -90, -90),
+				size = 0.047,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(2.8, -227, 119.1),
+				ang = Angle(180, 180, -90),
+				size = 0.04,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		letters = {
+			{
+				pos = Vector(13.2, 190, 117.1),
+				ang = Angle(180, 0, -90),
+				size = 0.043,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.8, 27, 101.85),
+				ang = Angle(180, -90, -90),
+				size = 0.039,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(5.7, -227, 118.7),
+				ang = Angle(180, 180, -90),
+				size = 0.035,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		routes = {
+			first = {
+				{
+					pos = Vector(13.0, 189.95, 118.2),
+					ang = Angle(180, 0, -90),
+					size = 0.0204,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(52.85, 27.15, 102.9),
+					ang = Angle(180, -90, -90),
+					size = 0.0183,
+					align = TEXT_ALIGN_LEFT,
+				},
+			},
+			last = {
+				{
+					pos = Vector(13.0, 189.95, 114.5),
+					ang = Angle(180, 0, -90),
+					size = 0.0204,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(52.85, 27.15, 99.5),
+					ang = Angle(180, -90, -90),
+					size = 0.0183,
+					align = TEXT_ALIGN_LEFT,
+				},
+			},
+		}
+	},
+	liaz_4292_60_new = { 
+		model = "models/sim_fphys_liaz_4292-60/liaz_4292-60_new.mdl",
+		color = Color(255, 150, 0),
+		routes_font = "Led5x7",
+		nums_font = "Led7x16",
+		nums = {
+			{
+				pos = Vector(16.9, 190, 117.2),
+				ang = Angle(180, 0, -90),
+				size = 0.053,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.8, 23.7, 102.1),
+				ang = Angle(180, -90, -90),
+				size = 0.047,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(2.8, -227, 119.1),
+				ang = Angle(180, 180, -90),
+				size = 0.04,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		letters = {
+			{
+				pos = Vector(13.2, 190, 117.1),
+				ang = Angle(180, 0, -90),
+				size = 0.043,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(52.8, 27, 101.85),
+				ang = Angle(180, -90, -90),
+				size = 0.039,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(5.7, -227, 118.7),
+				ang = Angle(180, 180, -90),
+				size = 0.035,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		routes = {
+			first = {
+				{
+					pos = Vector(13.0, 189.95, 118.2),
+					ang = Angle(180, 0, -90),
+					size = 0.0204,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(52.85, 27.15, 102.9),
+					ang = Angle(180, -90, -90),
+					size = 0.0183,
+					align = TEXT_ALIGN_LEFT,
+				},
+			},
+			last = {
+				{
+					pos = Vector(13.0, 189.95, 114.5),
+					ang = Angle(180, 0, -90),
+					size = 0.0204,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(52.85, 27.15, 99.5),
+					ang = Angle(180, -90, -90),
+					size = 0.0183,
+					align = TEXT_ALIGN_LEFT,
+				},
+			},
+		}
+	},
 	liaz_5292_22 = { 
 		model = "models/sim_fphys_liaz_5292-22/liaz_5292-22.mdl",
 		color = Color(255, 150, 0),
-		font = "Routes2",
+		routes_font = "Routes2",
+		nums_font = "Routes2",
 		nums = {
 			{
 				pos = Vector(23.5, 240.8, 114.7),
@@ -825,7 +994,8 @@ local vehs_routes = {
 	liaz_5292_30 = { 
 		model = "models/sim_fphys_liaz_5292-30/liaz_5292-30.mdl",
 		color = Color(255, 150, 0),
-		font = "Routes2",
+		routes_font = "Routes2",
+		nums_font = "Routes2",
 		nums = {
 			{
 				pos = Vector(16.725, 255.9, 113.8)*0.96,
@@ -901,7 +1071,8 @@ local vehs_routes = {
 	liaz_5292_65 = { 
 		model = "models/sim_fphys_liaz_5292-65/liaz_5292-65.mdl",
 		color = Color(225, 255, 100),
-		font = "Routes2",
+		routes_font = "Routes2",
+		nums_font = "Routes2",
 		nums = {
 			{
 				pos = Vector(16.725, 255.9, 113.8)*0.96,
@@ -977,7 +1148,8 @@ local vehs_routes = {
 	nefaz_5299_40_57 = {
 		model = "models/sim_fphys_nefaz_5299-40-57/nefaz_5299-40-57.mdl",
 		color = Color(255, 150, 0),
-		font = "Routes",
+		routes_font = "Routes",
+		nums_font = "Routes",
 		nums = {
 			{
 				pos = Vector(0.48, 6.478, 2.77)*39.456,
@@ -1053,7 +1225,8 @@ local vehs_routes = {
 	nefaz_5299_40_57_v2 = {
 		model = "models/sim_fphys_nefaz_5299-40-57/nefaz_5299-40-57_v2.mdl",
 		color = Color(230, 240, 255),
-		font = "Routes",
+		routes_font = "Routes",
+		nums_font = "Routes",
 		nums = {
 			{
 				pos = Vector(0.48, 6.478, 2.77)*39.456,
@@ -1129,7 +1302,8 @@ local vehs_routes = {
 	kamaz_6282 = {
 		model = "models/sim_fphys_kamaz-6282/kamaz-6282.mdl",
 		color = Color(225, 255, 100),
-		font = "Routes",
+		routes_font = "Routes",
+		nums_font = "Routes",
 		nums = {
 			{
 				pos = Vector(11.2, 211.4, 99.8)*1.1,
@@ -1215,7 +1389,6 @@ if SERVER then
 				local v = ply:GetSimfphys()
 				for m, veh in pairs(vehs_routes) do
 					if v:GetModel() == veh.model then
-					
 						if v.route_state then
 							v.route_state = ( v.route_state == 1 and 0 ) or 1
 						else
@@ -1416,6 +1589,8 @@ if CLIENT then
 	resource.AddFile( "resource/fonts/micra.ttf" )
 	resource.AddFile( "resource/fonts/routes.ttf" )
 	resource.AddFile( "resource/fonts/chixa.ttf" )
+	resource.AddFile( "resource/fonts/iskra.ttf" )
+	resource.AddFile( "resource/fonts/moscow-bus-1a2.ttf" )
 	
 	surface.CreateFont( "micra", {
 		font = "Micra",
@@ -1455,6 +1630,22 @@ if CLIENT then
 	})
 	surface.CreateFont( "Routes2", {
 		font = "Chixa",
+		size = 150,
+		weight = 0,
+		scanlines = 0,
+		antialias = true,
+		extended = true
+	})
+	surface.CreateFont( "Led5x7", {
+		font = "Moscow bus 1a2",
+		size = 150,
+		weight = 0,
+		scanlines = 0,
+		antialias = true,
+		extended = true
+	})
+	surface.CreateFont( "Led7x16", {
+		font = "Iskra 16 7",
 		size = 150,
 		weight = 0,
 		scanlines = 0,
@@ -1503,28 +1694,28 @@ if CLIENT then
 					for i, val in pairs(veh.nums) do
 						cam.Start3D2D(v:LocalToWorld(val.pos),v:LocalToWorldAngles(val.ang), val.size )
 							surface.SetDrawColor(255,255,255)
-							draw.SimpleText( v.route_num or "--" , veh.font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
+							draw.SimpleText( v.route_num or "--" , veh.nums_font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
 						cam.End3D2D()
 					end
 
 					for i, val in pairs(veh.letters) do
 						cam.Start3D2D(v:LocalToWorld(val.pos),v:LocalToWorldAngles(val.ang), val.size )
 							surface.SetDrawColor(255,255,255)
-							draw.SimpleText( v.route_letter or "-" , veh.font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
+							draw.SimpleText( v.route_letter or "-" , veh.nums_font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
 						cam.End3D2D()
 					end
 					
 					for i, val in pairs(veh.routes.first) do
 						cam.Start3D2D(v:LocalToWorld(val.pos+Vector(0,0,val.size*45)),v:LocalToWorldAngles(val.ang), val.size )
 							surface.SetDrawColor(255,255,255)
-							draw.SimpleText( v.route1 or "Not in" , veh.font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
+							draw.SimpleText( v.route1 or "Not in" , veh.routes_font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
 						cam.End3D2D()
 					end
 
 					for i, val in pairs(veh.routes.last) do
 						cam.Start3D2D(v:LocalToWorld(val.pos+Vector(0,0,val.size*45)),v:LocalToWorldAngles(val.ang), val.size )
 							surface.SetDrawColor(255,255,255)
-							draw.SimpleText( v.route2 or "service" , veh.font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
+							draw.SimpleText( v.route2 or "service" , veh.routes_font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
 						cam.End3D2D()
 					end
 			
