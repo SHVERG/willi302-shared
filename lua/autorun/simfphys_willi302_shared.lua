@@ -471,6 +471,14 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	nash_metro59 = {
+		model = "models/sim_fphys_nash_metro59/nash_metro59.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = -1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	nefaz_5299_40_57 = {
 		model = "models/sim_fphys_nefaz_5299-40-57/nefaz_5299-40-57.mdl",
 		degree = 2*70,
