@@ -535,6 +535,14 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	skoda_superb = {
+		model = "models/sim_fphys_skoda_superb/skoda_superb.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = -1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	subaru_legacy_b4 = {
 		model = "models/sim_fphys_subaru_legacy/subaru_legacy.mdl",
 		degree = 2*70,
@@ -1405,14 +1413,11 @@ if SERVER then
 						
 						local rf = RecipientFilter()
 						rf:AddAllPlayers()
-						local players = rf:GetPlayers()
 						
-						for n, pl in pairs(players) do
-							net.Start("Simfphys_Willi302_Shared_ON_OFF_Routes")
-								net.WriteEntity(v)
-								net.WriteInt( v.route_state, 3 )
-							net.Send(pl)
-						end
+						net.Start("Simfphys_Willi302_Shared_ON_OFF_Routes")
+							net.WriteEntity(v)
+							net.WriteInt( v.route_state, 3 )
+						net.Send(rf)
 						
 					end
 				end
@@ -1435,17 +1440,12 @@ if SERVER then
 
 					local rf = RecipientFilter()
 					rf:AddAllPlayers()
-					local players = rf:GetPlayers()
 					
-					for n, pl in pairs(players) do
-						net.Start("Simfphys_Change_Routes")
-							net.WriteEntity(v)
-							net.WriteInt( 0, 3 )
-							net.WriteString( v.route_num )
-							--print("Package sent to "..tostring(pl).." Entity: "..tostring(v))
-						net.Send(pl)
-					end
-					
+					net.Start("Simfphys_Change_Routes")
+						net.WriteEntity(v)
+						net.WriteInt( 0, 3 )
+						net.WriteString( v.route_num )
+					net.Send(rf)
 				end
 			end
 		end
@@ -1466,15 +1466,11 @@ if SERVER then
 					rf:AddAllPlayers()
 					local players = rf:GetPlayers()
 					
-					for n, pl in pairs(players) do
-						net.Start("Simfphys_Change_Routes")
-							net.WriteEntity(v)
-							net.WriteInt( 1, 3 )
-							net.WriteString( v.route_letter )
-							--print("Package sent to "..tostring(pl).." Entity: "..tostring(v))
-						net.Send(pl)
-					end
-					
+					net.Start("Simfphys_Change_Routes")
+						net.WriteEntity(v)
+						net.WriteInt( 1, 3 )
+						net.WriteString( v.route_letter )
+					net.Send(rf)
 				end
 			end
 		end
@@ -1497,15 +1493,11 @@ if SERVER then
 					rf:AddAllPlayers()
 					local players = rf:GetPlayers()
 					
-					for n, pl in pairs(players) do
-						net.Start("Simfphys_Change_Routes")
-							net.WriteEntity(v)
-							net.WriteInt( 2, 3 )
-							net.WriteString( str )
-							--print("Package sent to "..tostring(pl).." Entity: "..tostring(v))
-						net.Send(pl)
-					end
-					
+					net.Start("Simfphys_Change_Routes")
+						net.WriteEntity(v)
+						net.WriteInt( 2, 3 )
+						net.WriteString( str )
+					net.Send(rf)
 				end
 			end
 		end
@@ -1526,17 +1518,12 @@ if SERVER then
 					
 					local rf = RecipientFilter()
 					rf:AddAllPlayers()
-					local players = rf:GetPlayers()
 					
-					for n, pl in pairs(players) do
-						net.Start("Simfphys_Change_Routes")
-							net.WriteEntity(v)
-							net.WriteInt( 3, 3 )
-							net.WriteString( str )
-							--print("Package sent to "..tostring(pl).." Entity: "..tostring(v))
-						net.Send(pl)
-					end
-					
+					net.Start("Simfphys_Change_Routes")
+						net.WriteEntity(v)
+						net.WriteInt( 3, 3 )
+						net.WriteString( str )
+					net.Send(rf)
 				end
 			end
 		end
@@ -1599,7 +1586,7 @@ if CLIENT then
 	resource.AddFile( "resource/fonts/chixa.ttf" )
 	resource.AddFile( "resource/fonts/iskra.ttf" )
 	resource.AddFile( "resource/fonts/moscow-bus-1a2.ttf" )
-	
+
 	surface.CreateFont( "micra", {
 		font = "Micra",
 		size = 60,
@@ -1665,12 +1652,23 @@ if CLIENT then
 	CreateClientConVar("simfphys_advanced_steering_degree", "900", true, false, "Sets the degree of steering wheel", 0, 2000)
 	CreateClientConVar("simfphys_advanced_steering_smoothness", "0.8", true, false, "Sets the smoothness of steering", 0, 1)
 	
-	hook.Add( "InitPostEntity", "Ready", function()
+	hook.Add( "InitPostEntity", "Simfphys_Willi302_Routes_Ready", function()
 		net.Start( "Simfphys_Routes_Client_Ready" )
 		net.SendToServer()
 	end )
 	
-	hook.Add("PostDrawTranslucentRenderables", "Simfphys_DrawRoutes", function()
+	function InitLerpSubs(v)
+		if !v.sublights then return end
+		
+		for i, light in pairs(v.sublights) do
+			if !v.sublights_mats then v.sublights_mats = {} end
+			--print(i)
+			local string_data = file.Read( "materials/"..light.mat..".vmt", "GAME" )
+			v.sublights_mats[i] = CreateMaterial( light.id..v:GetClass()..v:EntIndex(), "VertexLitGeneric", util.KeyValuesToTable( string_data ) )
+		end
+	end
+	
+	hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", function()
 		
 		net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
 			ent = net.ReadEntity()
@@ -1694,6 +1692,29 @@ if CLIENT then
 		end)
 	
 		for k, v in pairs(ents.FindByClass("gmod_sent_vehicle_fphysics_base")) do
+			
+			if v.sublights_mats then
+				for i, light in pairs(v.sublights) do
+					
+					local mat = v.sublights_mats[i]
+					
+					mat:SetFloat("$detailblendfactor", (
+							light.trigger == "fog" and v:GetFogLightsEnabled() or
+							light.trigger == "brake" and v:GetIsBraking() or 
+							light.trigger == "light" and v:GetLightsEnabled() or
+							light.trigger == "lamp" and v:GetLampsEnabled() or
+							light.trigger == "rev" and v:GetGear() == 1 or
+							light.trigger == "turn_r" and v.flashnum == 1 and v.signal_right or
+							light.trigger == "turn_l" and v.flashnum == 1 and v.signal_left or
+							light.trigger == "engine" and v:GetRPM() > 0 
+						) and 
+						math.Clamp(Lerp(light.fadein, mat:GetFloat("$detailblendfactor"), 2), 0, 1) or
+						math.Clamp(Lerp(light.fadeout, mat:GetFloat("$detailblendfactor"), -1), 0, 1)
+					)
+					
+					v:SetSubMaterial(light.id, "!"..light.id..v:GetClass()..v:EntIndex())
+				end
+			end
 			
 			for m, veh in pairs(vehs_routes) do
 				
