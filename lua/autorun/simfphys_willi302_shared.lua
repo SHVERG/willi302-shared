@@ -207,6 +207,22 @@ local vehs_steering = {
 		angle_y = 1,
 		angle_r = 0
 	},
+	haval_f7 = {
+		model = "models/sim_fphys_haval_f7/haval_f7.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
+	haval_f7_pol = {
+		model = "models/sim_fphys_haval_f7/haval_f7_pol.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 0,
+		angle_y = 1,
+		angle_r = 0
+	},
 	honda_civic_si = {
 		model = "models/sentry/civicsi.mdl",
 		degree = 2*40,
@@ -1392,12 +1408,13 @@ local vehs_routes = {
 		}
 	},
 }
-	
+
 if SERVER then
 
 	util.AddNetworkString("Simfphys_Change_Routes")
+	util.AddNetworkString("Simfphys_Routes_Menu")
 	util.AddNetworkString("Simfphys_Willi302_Shared_ON_OFF_Routes")
-	util.AddNetworkString( "Simfphys_Routes_Client_Ready" )
+	util.AddNetworkString("Simfphys_Routes_Client_Ready")
 	
 	hook.Add("PlayerButtonDown", "Simfphys_Willi302_Shared_KEY_DOWN", function(ply, key)
 		if key == 52 then
@@ -1425,161 +1442,228 @@ if SERVER then
 		end
 	end)
 	
-	local function ChangeRouteNum( ply, str )
+	local function ChangeRouteNum( v, str )
 		if not str then return end
 		
-		if ply:GetSimfphys() != NULL then
-			local v = ply:GetSimfphys()
-			for k, veh in pairs(vehs_routes) do
-				if v:GetModel() == veh.model then
-
-					--v.route_num = ""
-					v.route_num = str
-					
-					--v.route_num = string.sub(str, 1, 3)
-
-					local rf = RecipientFilter()
-					rf:AddAllPlayers()
-					
-					net.Start("Simfphys_Change_Routes")
-						net.WriteEntity(v)
-						net.WriteInt( 0, 3 )
-						net.WriteString( v.route_num )
-					net.Send(rf)
-				end
-			end
-		end
+		v.route_num = str
 		
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		
+		net.Start("Simfphys_Change_Routes")
+			net.WriteEntity(v)
+			net.WriteInt( 0, 3 )
+			net.WriteString( v.route_num )
+		net.Send(rf)
 	end
 
-	local function ChangeRouteLetter( ply, str )
+	local function ChangeRouteLetter( v, str )
 		if not str then return end
 		
-		if ply:GetSimfphys() != NULL then
-			local v = ply:GetSimfphys()
-			for k, veh in pairs(vehs_routes) do
-				if v:GetModel() == veh.model then
-
-					v.route_letter = str
-					
-					local rf = RecipientFilter()
-					rf:AddAllPlayers()
-					local players = rf:GetPlayers()
-					
-					net.Start("Simfphys_Change_Routes")
-						net.WriteEntity(v)
-						net.WriteInt( 1, 3 )
-						net.WriteString( v.route_letter )
-					net.Send(rf)
-				end
-			end
-		end
+		v.route_letter = str
 		
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		local players = rf:GetPlayers()
+		
+		net.Start("Simfphys_Change_Routes")
+			net.WriteEntity(v)
+			net.WriteInt( 1, 3 )
+			net.WriteString( v.route_letter )
+		net.Send(rf)
 	end
 	
-	local function ChangeRoute1( ply, str )
+	local function ChangeRoute1( v, str )
 		if not str then return end
 		
 		if str == "" then return end
 		
-		if ply:GetSimfphys() != NULL then
-			local v = ply:GetSimfphys()
-			for k, veh in pairs(vehs_routes) do
-				if v:GetModel() == veh.model then
-				
-					v.route1 = str
-					
-					local rf = RecipientFilter()
-					rf:AddAllPlayers()
-					local players = rf:GetPlayers()
-					
-					net.Start("Simfphys_Change_Routes")
-						net.WriteEntity(v)
-						net.WriteInt( 2, 3 )
-						net.WriteString( str )
-					net.Send(rf)
-				end
-			end
-		end
+		v.route1 = str
+		
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		local players = rf:GetPlayers()
+		
+		net.Start("Simfphys_Change_Routes")
+			net.WriteEntity(v)
+			net.WriteInt( 2, 3 )
+			net.WriteString( str )
+		net.Send(rf)
 		
 	end
 	
-	local function ChangeRoute2( ply, str )
+	local function ChangeRoute2( v, str )
 		if not str then return end
 		
 		if str == "" then return end
 		
-		if ply:GetSimfphys() != NULL then
-			local v = ply:GetSimfphys()
-			for k, veh in pairs(vehs_routes) do
-				if v:GetModel() == veh.model then
-					
-					v.route2 = str
-					
-					local rf = RecipientFilter()
-					rf:AddAllPlayers()
-					
-					net.Start("Simfphys_Change_Routes")
-						net.WriteEntity(v)
-						net.WriteInt( 3, 3 )
-						net.WriteString( str )
-					net.Send(rf)
-				end
-			end
-		end
+		v.route2 = str
+		
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		
+		net.Start("Simfphys_Change_Routes")
+			net.WriteEntity(v)
+			net.WriteInt( 3, 3 )
+			net.WriteString( str )
+		net.Send(rf)
 		
 	end
 	
-
 	net.Receive( "Simfphys_Routes_Client_Ready", function( len, ply )
 		for k, v in pairs(ents.FindByClass("gmod_sent_vehicle_fphysics_base")) do
 			for m, veh in pairs(vehs_routes) do
 				
 				if !v.route1 or !v.route2 or !v.route_num then return end
-			
+				
+				local rf = RecipientFilter()
+				rf:AddAllPlayers()
+				
 				net.Start("Simfphys_Willi302_Shared_ON_OFF_Routes")
 					net.WriteEntity(v)
 					net.WriteInt( v.route_state, 3 )
 					--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
-				net.Send( ply )
+				net.Send( rf )
 			
 				net.Start("Simfphys_Change_Routes")
 					net.WriteEntity(v)
 					net.WriteInt( 0, 3 )
 					net.WriteString( v.route_num )
 					--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
-				net.Send( ply )
+				net.Send( rf )
 				
 				net.Start("Simfphys_Change_Routes")
 					net.WriteEntity(v)
 					net.WriteInt( 1, 3 )
 					net.WriteString( v.route_letter )
 					--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
-				net.Send( ply )
+				net.Send( rf )
 				
 				net.Start("Simfphys_Change_Routes")
 					net.WriteEntity(v)
 					net.WriteInt( 2, 3 )
 					net.WriteString( v.route1 )
 					--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
-				net.Send( ply )
+				net.Send( rf )
 				
 				net.Start("Simfphys_Change_Routes")
 					net.WriteEntity(v)
 					net.WriteInt( 3, 3 )
 					net.WriteString( v.route2 )
 					--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
-				net.Send( ply )
+				net.Send( rf )
 				
 			end
 		end
 	end )
 	
-	concommand.Add( "simfphys_change_route_nubmer", function(ply, cmd, args) ChangeRouteNum( ply, args[1] ) ChangeRouteLetter( ply, args[2] ) end )
-	concommand.Add( "simfphys_change_route", function(ply, cmd, args) ChangeRoute1( ply, args[1] ) ChangeRoute2( ply, args[2] )	end )
+	net.Receive( "Simfphys_Routes_Menu", function( len, ply )
+		local v = net.ReadEntity()
+		
+		ChangeRouteNum( v, net.ReadString() )
+		ChangeRouteLetter( v, net.ReadString() )
+		ChangeRoute1( v, net.ReadString() )
+		ChangeRoute2( v, net.ReadString() )
+	end )
+	
+	--concommand.Add( "simfphys_change_route_nubmer", function(ply, cmd, args) ChangeRouteNum( ply, args[1] ) ChangeRouteLetter( ply, args[2] ) end )
+	--concommand.Add( "simfphys_change_route", function(ply, cmd, args) ChangeRoute1( ply, args[1] ) ChangeRoute2( ply, args[2] ) end )
 end
 	
 if CLIENT then
+	
+	concommand.Add("simfphys_change_route", function()
+		local ply = LocalPlayer()
+		if ply:GetSimfphys() != NULL then
+			local v = ply:GetSimfphys()
+			for k, veh in pairs(vehs_routes) do
+				if v:GetModel() == veh.model then
+				
+					local size_x = 600
+					local size_y = 200
+					
+					local pos_x = ScrW()/2-size_x/2
+					local pos_y = ScrH()/2-size_y/2
+					
+					local DFrame = vgui.Create("DFrame")
+					
+					DFrame:SetPos(pos_x, pos_y)
+					DFrame:SetSize(size_x, size_y)
+					DFrame:SetTitle("Change Route")
+					DFrame:MakePopup()
+					
+					local DPanel = vgui.Create("DPanel", DFrame)
+					DPanel:Dock(TOP)
+					DPanel:SetPaintBackground(false)
+					
+					local Num_Label = vgui.Create("DLabel", DPanel)
+					Num_Label:Dock(LEFT)
+					Num_Label:SetText("Route Number")
+					Num_Label:SizeToContents()
+					
+					local Num_Text = vgui.Create("DTextEntry", DPanel)
+					Num_Text:Dock(LEFT)
+					Num_Text:SetMultiline(false)
+					Num_Text:SetEditable(true)
+					Num_Text:SetNumeric(true)
+					Num_Text:SetAllowNonAsciiCharacters(true)
+					Num_Text:SetValue(v.route_num or "")
+					
+					local Let_Label = vgui.Create("DLabel", DPanel)
+					Let_Label:Dock(LEFT)
+					Let_Label:SetText("Route Letter")
+					Let_Label:SizeToContents()
+					
+					local Let_Text = vgui.Create("DTextEntry", DPanel)
+					Let_Text:Dock(LEFT)
+					Let_Text:SetMultiline(false)
+					Let_Text:SetEditable(true)
+					Let_Text:SetAllowNonAsciiCharacters(true)
+					Let_Text:SetValue(v.route_letter or "")
+					
+					---
+					
+					local Route1_Label = vgui.Create("DLabel", DFrame)
+					Route1_Label:Dock(TOP)
+					Route1_Label:SetText("First Route")
+					
+					local Route1_Text = vgui.Create("DTextEntry", DFrame)
+					Route1_Text:Dock(TOP)
+					Route1_Text:SetMultiline(false)
+					Route1_Text:SetEditable(true)
+					Route1_Text:SetAllowNonAsciiCharacters(true)
+					Route1_Text:SetValue(v.route1 or "")
+					
+					local Route2_Label = vgui.Create("DLabel", DFrame)
+					Route2_Label:Dock(TOP)
+					Route2_Label:SetText("Last Route")
+					
+					local Route2_Text = vgui.Create("DTextEntry", DFrame)
+					Route2_Text:Dock(TOP)
+					Route2_Text:SetMultiline(false)
+					Route2_Text:SetEditable(true)
+					Route2_Text:SetAllowNonAsciiCharacters(true)
+					Route2_Text:SetValue(v.route2 or "")
+					
+					local Change_Button = vgui.Create("DButton", DFrame)
+					Change_Button:DockMargin(50, 0, 50, 0)
+					Change_Button:Dock(BOTTOM)
+					Change_Button:SetText("Change")
+					
+					Change_Button.DoClick = function()
+						net.Start( "Simfphys_Routes_Menu" )
+							net.WriteEntity( v )
+							net.WriteString( Num_Text:GetValue() )
+							net.WriteString( Let_Text:GetValue() )
+							net.WriteString( Route1_Text:GetValue() )
+							net.WriteString( Route2_Text:GetValue() )
+						net.SendToServer()
+					end
+				end
+			end
+		end
+	end)
+
 	resource.AddFile( "resource/fonts/digital7.ttf" )
 	resource.AddFile( "resource/fonts/micra.ttf" )
 	resource.AddFile( "resource/fonts/routes.ttf" )
@@ -1654,6 +1738,7 @@ if CLIENT then
 	
 	hook.Add( "InitPostEntity", "Simfphys_Willi302_Routes_Ready", function()
 		net.Start( "Simfphys_Routes_Client_Ready" )
+		--print("INIT")
 		net.SendToServer()
 	end )
 	
@@ -1671,8 +1756,8 @@ if CLIENT then
 	hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", function()
 		
 		net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
-			ent = net.ReadEntity()
-			ent.route_state = net.ReadInt(3)
+			v = net.ReadEntity()
+			v.route_state = net.ReadInt(3)
 		end)
 	
 		net.Receive("Simfphys_Change_Routes", function()
@@ -1717,9 +1802,7 @@ if CLIENT then
 			end
 			
 			for m, veh in pairs(vehs_routes) do
-				
-				if v:GetModel() == veh.model and v.route_state == 1 then
-					
+				if v:GetModel():lower() == veh.model:lower() and v.route_state == 1 then
 					for i, val in pairs(veh.nums) do
 						cam.Start3D2D(v:LocalToWorld(val.pos),v:LocalToWorldAngles(val.ang), val.size )
 							surface.SetDrawColor(255,255,255)
@@ -1751,18 +1834,18 @@ if CLIENT then
 				end
 			end
 			
-			if !GetConVar("simfphys_advanced_steering_enabled"):GetBool() then return end
-			
-			for m, veh in pairs(vehs_steering) do
-				if v:GetModel() == veh.model then
-					local degree = GetConVar("simfphys_advanced_steering_degree"):GetInt()
-					local degree_cust = -v:GetVehicleSteer()*(degree - veh.degree)/2
-					
-					if !v.advanced_steering_degree then v.advanced_steering_degree = 0 end
-					
-					v.advanced_steering_degree = Lerp(1-GetConVar("simfphys_advanced_steering_smoothness"):GetFloat(), v.advanced_steering_degree, degree_cust)
-					
-					v:ManipulateBoneAngles(v:LookupBone(veh.bone), Angle( v.advanced_steering_degree*veh.angle_p, v.advanced_steering_degree*veh.angle_y, v.advanced_steering_degree*veh.angle_r ))
+			if GetConVar("simfphys_advanced_steering_enabled"):GetBool() then
+				for m, veh in pairs(vehs_steering) do
+					if v:GetModel() == veh.model then
+						local degree = GetConVar("simfphys_advanced_steering_degree"):GetInt()
+						local degree_cust = -v:GetVehicleSteer()*(degree - veh.degree)/2
+						
+						if !v.advanced_steering_degree then v.advanced_steering_degree = 0 end
+						
+						v.advanced_steering_degree = Lerp(1-GetConVar("simfphys_advanced_steering_smoothness"):GetFloat(), v.advanced_steering_degree, degree_cust)
+						
+						v:ManipulateBoneAngles(v:LookupBone(veh.bone), Angle(v.advanced_steering_degree*veh.angle_p, v.advanced_steering_degree*veh.angle_y, v.advanced_steering_degree*veh.angle_r))
+					end
 				end
 			end
 			
