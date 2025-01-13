@@ -495,6 +495,14 @@ local vehs_steering = {
 		angle_y = 0,
 		angle_r = 0
 	},
+	nefaz_5299_17_52 = {
+		model = "models/sim_fphys_nefaz_5299_17_52/nefaz_5299_17_52.mdl",
+		degree = 2*70,
+		bone = "steer_w",
+		angle_p = 1,
+		angle_y = 0,
+		angle_r = 0
+	},
 	nefaz_5299_40_57 = {
 		model = "models/sim_fphys_nefaz_5299-40-57/nefaz_5299-40-57.mdl",
 		degree = 2*70,
@@ -870,6 +878,7 @@ local vehs_routes = {
 			},
 		}
 	},
+	
 	liaz_4292_60_new = { 
 		model = "models/sim_fphys_liaz_4292-60/liaz_4292-60_new.mdl",
 		color = Color(255, 150, 0),
@@ -946,6 +955,7 @@ local vehs_routes = {
 			},
 		}
 	},
+	
 	liaz_5292_22 = { 
 		model = "models/sim_fphys_liaz_5292-22/liaz_5292-22.mdl",
 		color = Color(255, 150, 0),
@@ -1172,6 +1182,83 @@ local vehs_routes = {
 					ang = Angle(180, -90, -90),
 					size = 0.0248*0.96,
 					align = TEXT_ALIGN_CENTER,
+				},
+			},
+		}
+	},
+	
+	nefaz_5299_17_52 = { 
+		model = "models/sim_fphys_nefaz_5299_17_52/nefaz_5299_17_52.mdl",
+		color = Color(255, 150, 0),
+		routes_font = "Led5x7",
+		nums_font = "Led7x16",
+		nums = {
+			{
+				pos = Vector(30.8, 188.4, 99.78)*1.15,
+				ang = Angle(180, 0, -90),
+				size = 0.039,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(43, 34.65, 102.15)*1.15,
+				ang = Angle(180, -90, -90),
+				size = 0.039,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(32.45, -225.8, 89.55)*1.15,
+				ang = Angle(180, 180, -90),
+				size = 0.039,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		letters = {
+			{
+				pos = Vector(29.35, 188.4, 98.85)*1.15,
+				ang = Angle(180, 0, -90),
+				size = 0.025,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(43, 36.1, 101.2)*1.15,
+				ang = Angle(180, -90, -90),
+				size = 0.025,
+				align = TEXT_ALIGN_RIGHT,
+			},
+			{
+				pos = Vector(33.95, -225.8, 88.65)*1.15,
+				ang = Angle(180, 180, -90),
+				size = 0.025,
+				align = TEXT_ALIGN_RIGHT,
+			},
+		},
+		routes = {
+			first = {
+				{
+					pos = Vector(28.75, 188.4, 100.4)*1.15,
+					ang = Angle(180, 0, -90),
+					size = 0.0195,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(43, 36.7, 102.75)*1.15,
+					ang = Angle(180, -90, -90),
+					size = 0.01955,
+					align = TEXT_ALIGN_LEFT,
+				},
+			},
+			last = {
+				{
+					pos = Vector(28.75, 188.4, 97.7)*1.15,
+					ang = Angle(180, 0, -90),
+					size = 0.0195,
+					align = TEXT_ALIGN_LEFT,
+				},
+				{
+					pos = Vector(43, 36.7, 100)*1.15,
+					ang = Angle(180, -90, -90),
+					size = 0.0195,
+					align = TEXT_ALIGN_LEFT,
 				},
 			},
 		}
