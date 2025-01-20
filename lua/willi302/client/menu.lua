@@ -113,7 +113,7 @@ local function build_willi302_menu( self )
 	
 	local reset_ass = vgui.Create( "DButton" )
 	reset_ass:SetParent( self.PropPanel )
-	reset_ass:SetText( "reset_ass" )	
+	reset_ass:SetText( "Reset" )	
 	reset_ass:SetPos( 25, 105 )
 	reset_ass:SetSize( 340, 25 )
 	reset_ass.DoClick = function()
