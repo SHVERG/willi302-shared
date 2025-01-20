@@ -3,7 +3,7 @@ util.AddNetworkString("Simfphys_Routes_Menu")
 util.AddNetworkString("Simfphys_Willi302_Shared_ON_OFF_Routes")
 util.AddNetworkString("Simfphys_Routes_Client_Ready")
 
-hook.Add("PlayerButtonDown", "Simfphys_Willi302_Shared_KEY_DOWN", function(ply, key)
+hook.Add("PlayerButtonDown", "Simfphys_Willi302_Shared_KEY_DOWN", function(ply, key) --- On/Off Routes Processing
 	if key == GetConVar( "cl_simfphys_bus_routes_on" ):GetInt() then
 		if ply:GetSimfphys() != NULL then
 			local v = ply:GetSimfphys()
@@ -22,7 +22,6 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Shared_KEY_DOWN", function(ply, 
 						net.WriteEntity(v)
 						net.WriteInt( v.route_state, 3 )
 					net.Send(rf)
-					
 				end
 			end
 		end
@@ -62,7 +61,6 @@ end
 
 local function ChangeRoute1( v, str )
 	if not str then return end
-	
 	if str == "" then return end
 	
 	v.route1 = str
@@ -76,7 +74,6 @@ local function ChangeRoute1( v, str )
 		net.WriteInt( 2, 3 )
 		net.WriteString( str )
 	net.Send(rf)
-	
 end
 
 local function ChangeRoute2( v, str )
@@ -94,13 +91,11 @@ local function ChangeRoute2( v, str )
 		net.WriteInt( 3, 3 )
 		net.WriteString( str )
 	net.Send(rf)
-	
 end
 
 net.Receive( "Simfphys_Routes_Client_Ready", function( len, ply )
 	for k, v in pairs(ents.FindByClass("gmod_sent_vehicle_fphysics_base")) do
 		for m, veh in pairs(vehs_routes) do
-			
 			if !v.route1 or !v.route2 or !v.route_num then return end
 			
 			local rf = RecipientFilter()
@@ -109,37 +104,31 @@ net.Receive( "Simfphys_Routes_Client_Ready", function( len, ply )
 			net.Start("Simfphys_Willi302_Shared_ON_OFF_Routes")
 				net.WriteEntity(v)
 				net.WriteInt( v.route_state, 3 )
-				--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
 			net.Send( rf )
 		
 			net.Start("Simfphys_Change_Routes")
 				net.WriteEntity(v)
 				net.WriteInt( 0, 3 )
 				net.WriteString( v.route_num )
-				--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
 			net.Send( rf )
 			
 			net.Start("Simfphys_Change_Routes")
 				net.WriteEntity(v)
 				net.WriteInt( 1, 3 )
 				net.WriteString( v.route_letter )
-				--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
 			net.Send( rf )
 			
 			net.Start("Simfphys_Change_Routes")
 				net.WriteEntity(v)
 				net.WriteInt( 2, 3 )
 				net.WriteString( v.route1 )
-				--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
 			net.Send( rf )
 			
 			net.Start("Simfphys_Change_Routes")
 				net.WriteEntity(v)
 				net.WriteInt( 3, 3 )
 				net.WriteString( v.route2 )
-				--print("Package sent to "..tostring(ply).." Entity: "..tostring(v))
 			net.Send( rf )
-			
 		end
 	end
 end )

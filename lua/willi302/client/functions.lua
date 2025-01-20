@@ -1,15 +1,13 @@
 hook.Add( "InitPostEntity", "Simfphys_Willi302_Routes_Ready", function()
 	net.Start( "Simfphys_Routes_Client_Ready" )
-	--print("INIT")
 	net.SendToServer()
 end )
 
-function InitLerpSubs(v)
+function InitLerpSubs(v) --- Smooth Submaterials Initialization
 	if !v.sublights then return end
 	
 	for i, light in pairs(v.sublights) do
 		if !v.sublights_mats then v.sublights_mats = {} end
-		--print(i)
 		local string_data = file.Read( "materials/"..light.mat..".vmt", "GAME" )
 		v.sublights_mats[i] = CreateMaterial( light.id..v:GetClass()..v:EntIndex(), "VertexLitGeneric", util.KeyValuesToTable( string_data ) )
 	end
@@ -21,8 +19,8 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 		v = net.ReadEntity()
 		v.route_state = net.ReadInt(3)
 	end)
-
-	net.Receive("Simfphys_Change_Routes", function()
+	
+	net.Receive("Simfphys_Change_Routes", function() --- Route Change Processing
 		ent = net.ReadEntity()
 		local route_type = net.ReadInt(3)
 		if route_type == 0 then
@@ -34,15 +32,14 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 		else
 			ent.route2 = net.ReadString()
 		end
-		--print("Package Recieved! Entity: "..tostring(ent).." Type: "..tostring(route_type))
-		
 	end)
-
+	
 	for k, v in pairs(ents.FindByClass("gmod_sent_vehicle_fphysics_base")) do
+		
+		--- Smooth Submaterials
 		
 		if v.sublights_mats then
 			for i, light in pairs(v.sublights) do
-				
 				local mat = v.sublights_mats[i]
 				
 				mat:SetFloat("$detailblendfactor", (
@@ -62,6 +59,8 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 				v:SetSubMaterial(light.id, "!"..light.id..v:GetClass()..v:EntIndex())
 			end
 		end
+		
+		--- Routes Visualization
 		
 		for m, veh in pairs(vehs_routes) do
 			if v:GetModel():lower() == veh.model:lower() and v.route_state == 1 then
@@ -92,9 +91,10 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 						draw.SimpleText( v.route2 or "service" , veh.routes_font, 0, 0, veh.color, val.align, TEXT_ALIGN_CENTER)
 					cam.End3D2D()
 				end
-		
 			end
 		end
+		
+		--- Advanced Steering System
 		
 		if GetConVar("cl_simfphys_advanced_steering_enabled"):GetBool() then
 			for m, veh in pairs(vehs_steering) do
@@ -110,6 +110,5 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 				end
 			end
 		end
-		
 	end
 end )

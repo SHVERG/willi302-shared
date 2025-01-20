@@ -34,7 +34,7 @@ local k_list = {
 	{k_s_3, KEY_PAD_3, "Enable Siren (3 Mode)"},
 }
 
-local function binder( x, y, tbl, num, parent)
+local function Binder( x, y, tbl, num, parent)
 	local sizex = 500
 	local sizey = 40
 	
@@ -77,7 +77,7 @@ local function binder( x, y, tbl, num, parent)
 	return binder
 end
 
-local function build_willi302_menu( self )
+local function BuildMenu( self )
 	local Shape = vgui.Create( "DShape", self.PropPanel )
 	Shape:SetType( "Rect" )
 	Shape:SetPos( 20, 20 )
@@ -134,7 +134,7 @@ local function build_willi302_menu( self )
 	local yy = 45+105
 	local binders = {}
 	for i = 1, table.Count( k_list ) do
-		binders[i] = binder(25,yy,k_list,i,self.PropPanel)
+		binders[i] = Binder(25,yy,k_list,i,self.PropPanel)
 		yy = yy + 45
 	end
 	
@@ -157,14 +157,14 @@ local function build_willi302_menu( self )
 	Background:SetSize( 510, yy-105 )
 end
 
-local function OpenRoutesMenu(v)
+local function OpenRoutesMenu(v) --- Routes Menu
 	local size_x = 600
 	local size_y = 200
 	
 	local pos_x = ScrW()/2-size_x/2
 	local pos_y = ScrH()/2-size_y/2
 	
-	local DFrame = vgui.Create("DFrame")
+	local DFrame = vgui.Create("DFrame") --- Main Frame
 	
 	DFrame:SetPos(pos_x, pos_y)
 	DFrame:SetSize(size_x, size_y)
@@ -174,6 +174,8 @@ local function OpenRoutesMenu(v)
 	local DPanel = vgui.Create("DPanel", DFrame)
 	DPanel:Dock(TOP)
 	DPanel:SetPaintBackground(false)
+	
+	--- Route Number
 	
 	local Num_Label = vgui.Create("DLabel", DPanel)
 	Num_Label:Dock(LEFT)
@@ -188,6 +190,8 @@ local function OpenRoutesMenu(v)
 	Num_Text:SetAllowNonAsciiCharacters(true)
 	Num_Text:SetValue(v.route_num or "")
 	
+	--- Route Letter
+	
 	local Let_Label = vgui.Create("DLabel", DPanel)
 	Let_Label:Dock(LEFT)
 	Let_Label:SetText("Route Letter")
@@ -200,7 +204,7 @@ local function OpenRoutesMenu(v)
 	Let_Text:SetAllowNonAsciiCharacters(true)
 	Let_Text:SetValue(v.route_letter or "")
 	
-	---
+	--- First Route
 	
 	local Route1_Label = vgui.Create("DLabel", DFrame)
 	Route1_Label:Dock(TOP)
@@ -213,6 +217,8 @@ local function OpenRoutesMenu(v)
 	Route1_Text:SetAllowNonAsciiCharacters(true)
 	Route1_Text:SetValue(v.route1 or "")
 	
+	--- Last Route
+	
 	local Route2_Label = vgui.Create("DLabel", DFrame)
 	Route2_Label:Dock(TOP)
 	Route2_Label:SetText("Last Route")
@@ -223,6 +229,7 @@ local function OpenRoutesMenu(v)
 	Route2_Text:SetEditable(true)
 	Route2_Text:SetAllowNonAsciiCharacters(true)
 	Route2_Text:SetValue(v.route2 or "")
+	
 	
 	local Change_Button = vgui.Create("DButton", DFrame)
 	Change_Button:DockMargin(50, 0, 50, 0)
@@ -241,7 +248,6 @@ local function OpenRoutesMenu(v)
 end
 
 hook.Add( "SimfphysPopulateVehicles", "Willi302_Settings", function( pnlContent, tree, node )
-	-- DYNAMIC LIGHTING SETTINGS
 	local node = tree:AddNode( "Willi302", "icon16/car.png" )
 	node.DoPopulate = function( self )
 		if self.PropPanel then return end
@@ -250,7 +256,7 @@ hook.Add( "SimfphysPopulateVehicles", "Willi302_Settings", function( pnlContent,
 		self.PropPanel:SetVisible( false )
 		self.PropPanel:SetTriggerSpawnlistChange( false )
 
-		build_willi302_menu( self )
+		BuildMenu( self )
 	end
 	
 	node.DoClick = function( self )
