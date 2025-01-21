@@ -6,6 +6,7 @@ if SERVER then
 	AddCSLuaFile("willi302/vehs_steering.lua")
 	
 	include("willi302/server/routes.lua")
+	include("willi302/server/doors.lua")
 end
 	
 if CLIENT then

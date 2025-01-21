@@ -3,7 +3,7 @@ util.AddNetworkString("Simfphys_Routes_Menu")
 util.AddNetworkString("Simfphys_Willi302_Shared_ON_OFF_Routes")
 util.AddNetworkString("Simfphys_Routes_Client_Ready")
 
-hook.Add("PlayerButtonDown", "Simfphys_Willi302_Shared_KEY_DOWN", function(ply, key) --- On/Off Routes Processing
+hook.Add("PlayerButtonDown", "Simfphys_Willi302_Routes_KEY_DOWN", function(ply, key) --- On/Off Routes Processing
 	if key == GetConVar( "cl_simfphys_bus_routes_on" ):GetInt() then
 		if ply:GetSimfphys() != NULL then
 			local v = ply:GetSimfphys()

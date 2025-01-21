@@ -29,9 +29,9 @@ local k_list = {
 	{k_el_on, KEY_PAD_ENTER, "On/Off Emergency Lights"},
 	{k_el_switch, KEY_PAD_DECIMAL, "Switch Emergency Lights Mode"},
 	{k_s_off, KEY_PAD_0, "Disable Siren"},
-	{k_s_1, KEY_PAD_1, "Enable Siren (1 Mode)"},
-	{k_s_2, KEY_PAD_2, "Enable Siren (2 Mode)"},
-	{k_s_3, KEY_PAD_3, "Enable Siren (3 Mode)"},
+	{k_s_1, KEY_PAD_1, "Enable Siren (Mode 1)"},
+	{k_s_2, KEY_PAD_2, "Enable Siren (Mode 2)"},
+	{k_s_3, KEY_PAD_3, "Enable Siren (Mode 3)"},
 }
 
 local function Binder( x, y, tbl, num, parent)
@@ -113,7 +113,7 @@ local function BuildMenu( self )
 	
 	local reset_ass = vgui.Create( "DButton" )
 	reset_ass:SetParent( self.PropPanel )
-	reset_ass:SetText( "Reset" )	
+	reset_ass:SetText( "Reset" )
 	reset_ass:SetPos( 25, 105 )
 	reset_ass:SetSize( 340, 25 )
 	reset_ass.DoClick = function()
@@ -140,7 +140,7 @@ local function BuildMenu( self )
 	
 	local ResetButton = vgui.Create( "DButton" )
 	ResetButton:SetParent( self.PropPanel )
-	ResetButton:SetText( "Reset" )	
+	ResetButton:SetText( "Reset" )
 	ResetButton:SetPos( 25, yy + 10 )
 	ResetButton:SetSize( 500, 25 )
 	ResetButton.DoClick = function()
