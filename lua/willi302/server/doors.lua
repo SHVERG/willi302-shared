@@ -94,9 +94,6 @@ hook.Add("Think", "Simfphys_Willi302_Doors_ANIMS", function()
 			if v.Doors.Rear then
 				v:SetPoseParameter(v.Doors.Rear.anim, Lerp(v.Doors.Rear.speed, v:GetPoseParameter(v.Doors.Rear.anim), v.Doors.Rear.pos))
 			end
-			
-			
-			
 		end
 	end
 end)

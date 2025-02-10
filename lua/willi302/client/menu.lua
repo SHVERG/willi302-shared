@@ -1,3 +1,5 @@
+local version = "1.1"
+
 local ConVar_ASS_Enabled = CreateClientConVar("cl_simfphys_advanced_steering_enabled", "1", true, false, "Enable Advanced Steering System")
 local ConVar_ASS_Degree = CreateClientConVar("cl_simfphys_advanced_steering_degree", "900", true, false, "Degree of steering wheel", 0, 2000)
 local ConVar_ASS_Smoothness = CreateClientConVar("cl_simfphys_advanced_steering_smoothness", "0.8", true, false, "Smoothness", 0, 1)
@@ -155,6 +157,11 @@ local function BuildMenu( self )
 	end
 	
 	Background:SetSize( 510, yy-105 )
+	
+	local Version = vgui.Create( "DLabel" )
+	Version:SetText( "V. "..version )
+	Version:SetParent( self.PropPanel )
+	Version:SetPos( 25, yy+30 )
 end
 
 local function OpenRoutesMenu(v) --- Routes Menu
@@ -275,6 +282,10 @@ concommand.Add("simfphys_change_route", function()
 			end
 		end
 	end
+end)
+
+concommand.Add("simfphys_willi302_version", function()
+	print(version)
 end)
 
 list.Set( "ContentCategoryIcons", "[simfphys] - Willi302's Cars", "icon16/willi302.png" )

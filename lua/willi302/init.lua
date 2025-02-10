@@ -7,6 +7,7 @@ if SERVER then
 	
 	include("willi302/server/routes.lua")
 	include("willi302/server/doors.lua")
+	include("willi302/server/advanced_steering_system.lua")
 end
 	
 if CLIENT then
