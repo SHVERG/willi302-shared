@@ -41,14 +41,20 @@ hook.Add( "OnEntityCreated", "Simfphys_Willi302_Car_Spawned_CLIENT", function( v
 	end
 end )
 
+--- Main Hook
+
 hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", function()
+	
+--- Routes ON/OFF
 	
 	net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
 		v = net.ReadEntity()
 		v.route_state = net.ReadInt(3)
 	end)
-	
-	net.Receive("Simfphys_Change_Routes", function() --- Route Change Processing
+
+--- Route Change Processing
+
+	net.Receive("Simfphys_Change_Routes", function() 
 		ent = net.ReadEntity()
 		local route_type = net.ReadInt(3)
 		if route_type == 0 then
