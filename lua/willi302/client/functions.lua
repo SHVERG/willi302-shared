@@ -13,10 +13,11 @@ function InitLerpSubs(v) --- Smooth Submaterials Initialization
 	end
 end
 
---- ASS List Adding
+--- SERVER2CLIENT
 
 hook.Add( "OnEntityCreated", "Simfphys_Willi302_Car_Spawned_CLIENT", function( v )
 	if v:GetClass() == "gmod_sent_vehicle_fphysics_base" then
+	-- Get ASS data from client
 		net.Receive("Init_ASS", function()
 			if v == net.ReadEntity() then
 				v.ASS = {}
@@ -27,6 +28,27 @@ hook.Add( "OnEntityCreated", "Simfphys_Willi302_Car_Spawned_CLIENT", function( v
 				v.ASS.Angle_R = net.ReadFloat()
 			end
 		end)
+
+	-- Get GSS data from client
+		net.Receive("Init_GSS", function()
+			if v == net.ReadEntity() then
+				v.GSS = {}
+				v.GSS.Whine_Sound = net.ReadString()
+				v.GSS.Shift_Sound = net.ReadString()
+				v.GSS.Vol_Start = net.ReadFloat()
+				v.GSS.Vol_End = net.ReadFloat()
+				v.GSS.Vol_Max = net.ReadFloat()
+				v.GSS.Pitch_Mult = net.ReadFloat()
+				v.GSS.Gears = net.ReadTable()
+			end
+			
+			-- Create gear sound
+			v.gearwhine_sound = CreateSound(v, v.GSS.Whine_Sound)
+			v.oldgear = v:GetGear()
+			v.gearfraction = 0
+		end)
+		
+		-- Adding ASS params from list (for old ports)
 		
 		for k, car in pairs(vehs_steering) do
 			if v:GetModel() == car.model then
@@ -40,6 +62,16 @@ hook.Add( "OnEntityCreated", "Simfphys_Willi302_Car_Spawned_CLIENT", function( v
 		end
 	end
 end )
+
+--- On Remove
+
+hook.Add( "EntityRemoved", "Simfphys_Willi302_Car_Removed", function(v)
+	if v:GetClass() == "gmod_sent_vehicle_fphysics_base" then
+		if v.GSS then
+			v.gearwhine_sound:Stop()
+		end
+	end
+end)
 
 --- Main Hook
 
@@ -140,6 +172,34 @@ hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", f
 				v.advanced_steering_degree = Lerp(1-GetConVar("cl_simfphys_advanced_steering_smoothness"):GetFloat(), v.advanced_steering_degree, degree_cust)
 				
 				v:ManipulateBoneAngles(v:LookupBone(v.ASS.Bone), Angle(v.advanced_steering_degree*v.ASS.Angle_P, v.advanced_steering_degree*v.ASS.Angle_Y, v.advanced_steering_degree*v.ASS.Angle_R))
+			end
+		end
+		
+--- Gearbox Sound System
+		if GetConVar("cl_simfphys_gearbox_sound_system"):GetBool() then
+			if v.GSS then
+				if v:GetGear() != v.oldgear then
+					v.oldgear = v:GetGear()
+					v.gearfraction = 0
+					if v.GSS.Shift_Sound != "" and v:GetGear() == 1 then
+						--print("hrust")
+						v:EmitSound(v.GSS.Shift_Sound, 80, 100, v:GetRPM() > 0 and 1 or 0)
+					end
+				else
+					v.gearfraction = math.Clamp(v.gearfraction+0.005, 0, 1)
+				end
+				
+				v.gearwhine_mult = Lerp(math.ease.OutBounce(v.gearfraction), 0.5, 1)
+				
+				v.gearwhine_vol = math.Clamp((v:GetRPM()-v.GSS.Vol_Start)/v.GSS.Vol_End, 0, v.GSS.Vol_Max)*math.Clamp(0.5+v:GetThrottle()*3, 0.5, 2)*(1-v:GetClutch())*(v:GetGear() == 1 and 2 or 1)
+				
+				if v:GetGear() > 1 then
+					v.gearwhine_pitch = v:GetRPM()/10*v.GSS.Gears[v:GetGear()]*v.gearwhine_mult*v.GSS.Pitch_Mult
+				else
+					v.gearwhine_pitch = v:GetRPM()/5*(-v.GSS.Gears[v:GetGear()])*v.gearwhine_mult*v.GSS.Pitch_Mult
+				end
+				
+				v.gearwhine_sound:PlayEx(v.gearwhine_vol, v.gearwhine_pitch)
 			end
 		end
 	end

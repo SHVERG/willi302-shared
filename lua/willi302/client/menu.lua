@@ -1,4 +1,6 @@
-local version = "1.1"
+local version = "1.2"
+
+local ConVar_GSS_Enabled = CreateClientConVar("cl_simfphys_gearbox_sound_system", "1", true, false, "Enable Gearbox Sound System")
 
 local ConVar_ASS_Enabled = CreateClientConVar("cl_simfphys_advanced_steering_enabled", "1", true, false, "Enable Advanced Steering System")
 local ConVar_ASS_Degree = CreateClientConVar("cl_simfphys_advanced_steering_degree", "900", true, false, "Degree of steering wheel", 0, 2000)
@@ -83,7 +85,7 @@ local function BuildMenu( self )
 	local Shape = vgui.Create( "DShape", self.PropPanel )
 	Shape:SetType( "Rect" )
 	Shape:SetPos( 20, 20 )
-	Shape:SetSize( 350, 120 )
+	Shape:SetSize( 510, 120 )
 	Shape:SetColor( Color( 0, 0, 0, 200 ) )
 
 	local box_ass_enabled = vgui.Create( "DCheckBoxLabel", self.PropPanel)
@@ -95,7 +97,7 @@ local function BuildMenu( self )
 
 	local slider_ass_degree = vgui.Create( "DNumSlider", self.PropPanel)
 	slider_ass_degree:SetPos( 30,55 )
-	slider_ass_degree:SetSize( 345,20 )
+	slider_ass_degree:SetSize( 500,20 )
 	slider_ass_degree:SetText( ConVar_ASS_Degree:GetHelpText() )
 	slider_ass_degree:SetMin( ConVar_ASS_Degree:GetMin() )
 	slider_ass_degree:SetMax( ConVar_ASS_Degree:GetMax() )
@@ -105,7 +107,7 @@ local function BuildMenu( self )
 
 	local slider_ass_smoothness = vgui.Create( "DNumSlider", self.PropPanel)
 	slider_ass_smoothness:SetPos( 30,75 )
-	slider_ass_smoothness:SetSize( 345, 20 )
+	slider_ass_smoothness:SetSize( 500, 20 )
 	slider_ass_smoothness:SetText( ConVar_ASS_Smoothness:GetHelpText() )
 	slider_ass_smoothness:SetMin( ConVar_ASS_Smoothness:GetMin() )
 	slider_ass_smoothness:SetMax( ConVar_ASS_Smoothness:GetMax() )
@@ -117,7 +119,7 @@ local function BuildMenu( self )
 	reset_ass:SetParent( self.PropPanel )
 	reset_ass:SetText( "Reset" )
 	reset_ass:SetPos( 25, 105 )
-	reset_ass:SetSize( 340, 25 )
+	reset_ass:SetSize( 500, 25 )
 	reset_ass.DoClick = function()
 		box_ass_enabled:SetValue( 1 )
 		slider_ass_degree:SetValue( 900 )
@@ -128,12 +130,25 @@ local function BuildMenu( self )
 		ConVar_ASS_Smoothness:SetFloat( 0.8 )
 	end
 	
+	local Shape = vgui.Create( "DShape", self.PropPanel )
+	Shape:SetType( "Rect" )
+	Shape:SetPos( 20, 20+125 )
+	Shape:SetSize( 510, 25 )
+	Shape:SetColor( Color( 0, 0, 0, 200 ) )
+	
+	local box_gss_enabled = vgui.Create( "DCheckBoxLabel", self.PropPanel)
+	box_gss_enabled:SetPos( 25,25+125 )
+	box_gss_enabled:SetText( ConVar_GSS_Enabled:GetHelpText() )
+	box_gss_enabled:SetConVar( ConVar_GSS_Enabled:GetName() )
+	box_gss_enabled:SetValue( ConVar_GSS_Enabled:GetInt() )
+	box_gss_enabled:SizeToContents()
+	
 	local Background = vgui.Create( "DShape", self.PropPanel)
 	Background:SetType( "Rect" )
-	Background:SetPos( 20, 40+105 )
+	Background:SetPos( 20, 40+105+30 )
 	Background:SetColor( Color( 0, 0, 0, 200 ) )
 	
-	local yy = 45+105
+	local yy = 45+105+30
 	local binders = {}
 	for i = 1, table.Count( k_list ) do
 		binders[i] = Binder(25,yy,k_list,i,self.PropPanel)
@@ -156,12 +171,12 @@ local function BuildMenu( self )
 		end
 	end
 	
-	Background:SetSize( 510, yy-105 )
+	Background:SetSize( 510, yy-105-30 )
 	
 	local Version = vgui.Create( "DLabel" )
 	Version:SetText( "V. "..version )
 	Version:SetParent( self.PropPanel )
-	Version:SetPos( 25, yy+30 )
+	Version:SetPos( 25, yy+30+10 )
 end
 
 local function OpenRoutesMenu(v) --- Routes Menu
