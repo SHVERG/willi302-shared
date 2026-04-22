@@ -1,9 +1,25 @@
+local function IsPlayerBindKey( ply, key, cvar_name, default_key )
+	if not IsValid(ply) then return false end
+
+	local pressed_key = tonumber(key)
+	if not pressed_key then return false end
+
+	local bind_key = tonumber(ply:GetInfoNum(cvar_name, default_key))
+	if not bind_key then
+		bind_key = tonumber(default_key)
+	end
+
+	if not bind_key then return false end
+
+	return pressed_key == bind_key
+end
+
 hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, key) --- On/Off Routes Processing
 	if ply:GetSimfphys() != NULL then
 		local v = ply:GetSimfphys()
 		if !v.Doors then return end
 		
-		if v.Doors.Driver and key == GetConVar( "cl_simfphys_bus_door_driver" ):GetInt() then
+		if v.Doors.Driver and IsPlayerBindKey( ply, key, "cl_simfphys_bus_door_driver", KEY_PAD_0 ) then
 			if v.Doors.Driver.pos == 1.1 then
 				v.Doors.Driver.pos = -0.1
 				v:EmitSound(v.Doors.Driver.sound_close, 75, v.Doors.Driver.pitch or 100)
@@ -13,7 +29,7 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, k
 			end
 		end
 		
-		if v.Doors.Front and key == GetConVar( "cl_simfphys_bus_door_front" ):GetInt() then
+		if v.Doors.Front and IsPlayerBindKey( ply, key, "cl_simfphys_bus_door_front", KEY_PAD_1 ) then
 			if v.Doors.Front.pos == 1.1 then
 				v.Doors.Front.pos = -0.1
 				v:EmitSound(v.Doors.Front.sound_close, 75, v.Doors.Front.pitch or 100)
@@ -23,7 +39,7 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, k
 			end
 		end
 		
-		if v.Doors.Middle and key == GetConVar( "cl_simfphys_bus_door_middle" ):GetInt() then
+		if v.Doors.Middle and IsPlayerBindKey( ply, key, "cl_simfphys_bus_door_middle", KEY_PAD_2 ) then
 			if v.Doors.Middle.pos == 1.1 then
 				v.Doors.Middle.pos = -0.1
 				v:EmitSound(v.Doors.Middle.sound_close, 75, v.Doors.Middle.pitch or 100)
@@ -33,7 +49,7 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, k
 			end
 		end
 		
-		if v.Doors.Rear and key == GetConVar( "cl_simfphys_bus_door_rear" ):GetInt() then
+		if v.Doors.Rear and IsPlayerBindKey( ply, key, "cl_simfphys_bus_door_rear", KEY_PAD_3 ) then
 			if v.Doors.Rear.pos == 1.1 then
 				v.Doors.Rear.pos = -0.1
 				v:EmitSound(v.Doors.Rear.sound_close, 75, v.Doors.Rear.pitch or 100)
@@ -43,7 +59,7 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, k
 			end
 		end
 		
-		if key == GetConVar( "cl_simfphys_bus_doors_open" ):GetInt() then
+		if IsPlayerBindKey( ply, key, "cl_simfphys_bus_doors_open", KEY_PAD_4 ) then
 			if v.Doors.Front and v.Doors.Front.pos == -0.1 then
 				v.Doors.Front.pos = 1.1
 				v:EmitSound(v.Doors.Front.sound_open, 75, v.Doors.Front.pitch or 100)
@@ -58,7 +74,7 @@ hook.Add("PlayerButtonDown", "Simfphys_Willi302_Doors_KEY_DOWN", function(ply, k
 			end
 		end
 		
-		if key == GetConVar( "cl_simfphys_bus_doors_close" ):GetInt() then
+		if IsPlayerBindKey( ply, key, "cl_simfphys_bus_doors_close", KEY_PAD_5 ) then
 			if v.Doors.Front and v.Doors.Front.pos == 1.1 then
 				v.Doors.Front.pos = -0.1
 				v:EmitSound(v.Doors.Front.sound_close, 75, v.Doors.Front.pitch or 100)
