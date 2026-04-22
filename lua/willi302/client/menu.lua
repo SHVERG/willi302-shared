@@ -289,13 +289,11 @@ end )
 
 concommand.Add("simfphys_change_route", function()
 	local ply = LocalPlayer()
-	if ply:GetSimfphys() != NULL then
-		local v = ply:GetSimfphys()
-		for k, veh in pairs(vehs_routes) do
-			if v:GetModel() == veh.model then
-				OpenRoutesMenu(v)
-			end
-		end
+	if ply:GetSimfphys() == NULL then return end
+
+	local v = ply:GetSimfphys()
+	if HasCapability(v, "routes") then
+		OpenRoutesMenu(v)
 	end
 end)
 
