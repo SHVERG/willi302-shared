@@ -15,39 +15,66 @@ end
 
 --- SERVER2CLIENT
 
+-- Get ASS data from server
+net.Receive("Init_ASS", function()
+	local ent = net.ReadEntity()
+	if !IsValid(ent) or ent:GetClass() != "gmod_sent_vehicle_fphysics_base" then return end
+
+	ent.ASS = {}
+	ent.ASS.Degree = net.ReadFloat()
+	ent.ASS.Bone = net.ReadString()
+	ent.ASS.Angle_P = net.ReadFloat()
+	ent.ASS.Angle_Y = net.ReadFloat()
+	ent.ASS.Angle_R = net.ReadFloat()
+end)
+
+-- Get GSS data from server
+net.Receive("Init_GSS", function()
+	local ent = net.ReadEntity()
+	if !IsValid(ent) or ent:GetClass() != "gmod_sent_vehicle_fphysics_base" then return end
+
+	ent.GSS = {}
+	ent.GSS.Whine_Sound = net.ReadString()
+	ent.GSS.Shift_Sound = net.ReadString()
+	ent.GSS.Vol_Start = net.ReadFloat()
+	ent.GSS.Vol_End = net.ReadFloat()
+	ent.GSS.Vol_Max = net.ReadFloat()
+	ent.GSS.Pitch_Mult = net.ReadFloat()
+	ent.GSS.Gears = net.ReadTable()
+
+	-- Create gear sound
+	ent.gearwhine_sound = CreateSound(ent, ent.GSS.Whine_Sound)
+	ent.oldgear = ent:GetGear()
+	ent.gearfraction = 0
+end)
+
+-- Routes ON/OFF
+net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
+	local ent = net.ReadEntity()
+	if !IsValid(ent) or ent:GetClass() != "gmod_sent_vehicle_fphysics_base" then return end
+
+	ent.route_state = net.ReadInt(3)
+end)
+
+-- Route change processing
+net.Receive("Simfphys_Change_Routes", function()
+	local ent = net.ReadEntity()
+	if !IsValid(ent) or ent:GetClass() != "gmod_sent_vehicle_fphysics_base" then return end
+
+	local route_type = net.ReadInt(3)
+	if route_type == 0 then
+		ent.route_num = net.ReadString()
+	elseif route_type == 1 then
+		ent.route_letter = net.ReadString()
+	elseif route_type == 2 then
+		ent.route1 = net.ReadString()
+	else
+		ent.route2 = net.ReadString()
+	end
+end)
+
 hook.Add( "OnEntityCreated", "Simfphys_Willi302_Car_Spawned_CLIENT", function( v )
 	if v:GetClass() == "gmod_sent_vehicle_fphysics_base" then
-	-- Get ASS data from client
-		net.Receive("Init_ASS", function()
-			if v == net.ReadEntity() then
-				v.ASS = {}
-				v.ASS.Degree = net.ReadFloat()
-				v.ASS.Bone = net.ReadString()
-				v.ASS.Angle_P = net.ReadFloat()
-				v.ASS.Angle_Y = net.ReadFloat()
-				v.ASS.Angle_R = net.ReadFloat()
-			end
-		end)
-
-	-- Get GSS data from client
-		net.Receive("Init_GSS", function()
-			if v == net.ReadEntity() then
-				v.GSS = {}
-				v.GSS.Whine_Sound = net.ReadString()
-				v.GSS.Shift_Sound = net.ReadString()
-				v.GSS.Vol_Start = net.ReadFloat()
-				v.GSS.Vol_End = net.ReadFloat()
-				v.GSS.Vol_Max = net.ReadFloat()
-				v.GSS.Pitch_Mult = net.ReadFloat()
-				v.GSS.Gears = net.ReadTable()
-			end
-			
-			-- Create gear sound
-			v.gearwhine_sound = CreateSound(v, v.GSS.Whine_Sound)
-			v.oldgear = v:GetGear()
-			v.gearfraction = 0
-		end)
-		
 		-- Adding ASS params from list (for old ports)
 		
 		for k, car in pairs(vehs_steering) do
@@ -76,30 +103,6 @@ end)
 --- Main Hook
 
 hook.Add("PostDrawTranslucentRenderables", "Simfphys_Willi302_LightsAndStuff", function()
-	
---- Routes ON/OFF
-	
-	net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
-		v = net.ReadEntity()
-		v.route_state = net.ReadInt(3)
-	end)
-
---- Route Change Processing
-
-	net.Receive("Simfphys_Change_Routes", function() 
-		ent = net.ReadEntity()
-		local route_type = net.ReadInt(3)
-		if route_type == 0 then
-			ent.route_num = net.ReadString()
-		elseif route_type == 1 then
-			ent.route_letter = net.ReadString()
-		elseif route_type == 2 then
-			ent.route1 = net.ReadString()
-		else
-			ent.route2 = net.ReadString()
-		end
-	end)
-	
 	for k, v in pairs(ents.FindByClass("gmod_sent_vehicle_fphysics_base")) do
 		
 --- Smooth Submaterials
