@@ -1,6 +1,8 @@
 if SERVER then
 	AddCSLuaFile("willi302/client/fonts.lua")
 	AddCSLuaFile("willi302/client/functions.lua")
+	AddCSLuaFile("willi302/client/i18n/en.lua")
+	AddCSLuaFile("willi302/client/i18n/ru.lua")
 	AddCSLuaFile("willi302/client/menu.lua")
 	AddCSLuaFile("willi302/vehs_routes.lua")
 	AddCSLuaFile("willi302/vehs_steering.lua")
