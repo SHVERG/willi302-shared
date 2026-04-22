@@ -2,8 +2,7 @@ util.AddNetworkString("Init_ASS")
 util.AddNetworkString("Init_GSS")
 
 hook.Add( "simfphysOnSpawn", "Simfphys_Willi302_Car_Spawned_SERVER", function( v )
-	local rf = RecipientFilter()
-	rf:AddAllPlayers()
+	local rf = Willi302_BuildVehicleRecipients( v, nil, true )
 	
 	if v.ASS then
 		net.Start("Init_ASS")
