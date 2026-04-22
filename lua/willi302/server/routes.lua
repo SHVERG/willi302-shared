@@ -1,10 +1,26 @@
+local function IsPlayerBindKey( ply, key, cvar_name, default_key )
+	if not IsValid(ply) then return false end
+
+	local pressed_key = tonumber(key)
+	if not pressed_key then return false end
+
+	local bind_key = tonumber(ply:GetInfoNum(cvar_name, default_key))
+	if not bind_key then
+		bind_key = tonumber(default_key)
+	end
+
+	if not bind_key then return false end
+
+	return pressed_key == bind_key
+end
+
 util.AddNetworkString("Simfphys_Change_Routes")
 util.AddNetworkString("Simfphys_Routes_Menu")
 util.AddNetworkString("Simfphys_Willi302_Shared_ON_OFF_Routes")
 util.AddNetworkString("Simfphys_Routes_Client_Ready")
 
 hook.Add("PlayerButtonDown", "Simfphys_Willi302_Routes_KEY_DOWN", function(ply, key) --- On/Off Routes Processing
-	if key == GetConVar( "cl_simfphys_bus_routes_on" ):GetInt() then
+	if IsPlayerBindKey( ply, key, "cl_simfphys_bus_routes_on", KEY_PAD_DECIMAL ) then
 		if ply:GetSimfphys() != NULL then
 			local v = ply:GetSimfphys()
 			for m, veh in pairs(vehs_routes) do
