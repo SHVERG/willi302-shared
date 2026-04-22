@@ -84,6 +84,11 @@ if SERVER then
 end
 
 if CLIENT then
+	hook.Add("InitPostEntity", "Simfphys_Willi302_Routes_Ready", function()
+		net.Start("Simfphys_Routes_Client_Ready")
+		net.SendToServer()
+	end)
+
 	net.Receive("Simfphys_Willi302_Shared_ON_OFF_Routes", function()
 		local v = net.ReadEntity()
 		if not IsValid(v) then return end

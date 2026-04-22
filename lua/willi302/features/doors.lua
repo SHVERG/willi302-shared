@@ -1,4 +1,4 @@
-if not SERVER then return end
+if CLIENT then return end
 
 local function get_doors_capability(v)
 	return GetCapability(v, "doors") or v.Doors

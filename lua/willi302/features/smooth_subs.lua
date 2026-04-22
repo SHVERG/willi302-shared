@@ -1,8 +1,3 @@
-hook.Add("InitPostEntity", "Simfphys_Willi302_Routes_Ready", function()
-	net.Start("Simfphys_Routes_Client_Ready")
-	net.SendToServer()
-end)
-
 function InitLerpSubs(v) --- Smooth Submaterials Initialization
 	if not v.sublights then return end
 

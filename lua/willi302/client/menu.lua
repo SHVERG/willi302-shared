@@ -1,13 +1,12 @@
 local version = "1.2"
 
-local LangConVar = CreateClientConVar("cl_simfphys_willi302_lang", "en", true, false, "Willi302 language (en/ru)")
 local LangDicts = {
 	en = include("willi302/client/i18n/en.lua") or {},
 	ru = include("willi302/client/i18n/ru.lua") or {},
 }
 
 local function L(key)
-	local lang = string.lower(LangConVar:GetString() or "en")
+	local lang = string.lower(GetConVar("gmod_language"):GetString() or "en")
 	local dict = LangDicts[lang] or LangDicts.en or {}
 	local fallback = LangDicts.en or {}
 
