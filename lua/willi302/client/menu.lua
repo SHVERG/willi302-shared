@@ -1,10 +1,24 @@
 local version = "1.2"
 
-local ConVar_GSS_Enabled = CreateClientConVar("cl_simfphys_gearbox_sound_system", "1", true, false, "Enable Gearbox Sound System")
+local LangConVar = CreateClientConVar("cl_simfphys_willi302_lang", "en", true, false, "Willi302 language (en/ru)")
+local LangDicts = {
+	en = include("willi302/client/i18n/en.lua") or {},
+	ru = include("willi302/client/i18n/ru.lua") or {},
+}
 
-local ConVar_ASS_Enabled = CreateClientConVar("cl_simfphys_advanced_steering_enabled", "1", true, false, "Enable Advanced Steering System")
-local ConVar_ASS_Degree = CreateClientConVar("cl_simfphys_advanced_steering_degree", "900", true, false, "Degree of steering wheel", 0, 2000)
-local ConVar_ASS_Smoothness = CreateClientConVar("cl_simfphys_advanced_steering_smoothness", "0.8", true, false, "Smoothness", 0, 1)
+local function L(key)
+	local lang = string.lower(LangConVar:GetString() or "en")
+	local dict = LangDicts[lang] or LangDicts.en or {}
+	local fallback = LangDicts.en or {}
+
+	return dict[key] or fallback[key] or key
+end
+
+local ConVar_GSS_Enabled = CreateClientConVar("cl_simfphys_gearbox_sound_system", "1", true, false, L("settings.gss_enabled"))
+
+local ConVar_ASS_Enabled = CreateClientConVar("cl_simfphys_advanced_steering_enabled", "1", true, false, L("settings.ass_enabled"))
+local ConVar_ASS_Degree = CreateClientConVar("cl_simfphys_advanced_steering_degree", "900", true, false, L("settings.ass_degree"), 0, 2000)
+local ConVar_ASS_Smoothness = CreateClientConVar("cl_simfphys_advanced_steering_smoothness", "0.8", true, false, L("settings.ass_smoothness"), 0, 1)
 
 local k_door_d = CreateClientConVar( "cl_simfphys_bus_door_driver", KEY_PAD_0 , true, true )
 local k_door_f = CreateClientConVar( "cl_simfphys_bus_door_front", KEY_PAD_1 , true, true )
@@ -22,20 +36,20 @@ local k_s_2 = CreateClientConVar( "cl_simfphys_siren_mode_2", KEY_PAD_2 , true, 
 local k_s_3 = CreateClientConVar( "cl_simfphys_siren_mode_3", KEY_PAD_3 , true, true )
 
 local k_list = {
-	{k_door_d, KEY_PAD_0, "Open/Close Bus Driver's Door"},
-	{k_door_f, KEY_PAD_1, "Open/Close Bus Front Door(s)"},
-	{k_door_m, KEY_PAD_2, "Open/Close Bus Middle Door(s)"},
-	{k_door_r, KEY_PAD_3, "Open/Close Bus Rear Door(s)"},
-	{k_door_op, KEY_PAD_4, "Open All Bus Doors"},
-	{k_door_cl, KEY_PAD_5, "Close All Bus Doors"},
-	{k_routes_on, KEY_PAD_DECIMAL, "On/Off Route Indicator"},
+	{k_door_d, KEY_PAD_0, "bind.driver_door"},
+	{k_door_f, KEY_PAD_1, "bind.front_door"},
+	{k_door_m, KEY_PAD_2, "bind.middle_door"},
+	{k_door_r, KEY_PAD_3, "bind.rear_door"},
+	{k_door_op, KEY_PAD_4, "bind.open_all_doors"},
+	{k_door_cl, KEY_PAD_5, "bind.close_all_doors"},
+	{k_routes_on, KEY_PAD_DECIMAL, "bind.route_indicator"},
 	
-	{k_el_on, KEY_PAD_ENTER, "On/Off Emergency Lights"},
-	{k_el_switch, KEY_PAD_DECIMAL, "Switch Emergency Lights Mode"},
-	{k_s_off, KEY_PAD_0, "Disable Siren"},
-	{k_s_1, KEY_PAD_1, "Enable Siren (Mode 1)"},
-	{k_s_2, KEY_PAD_2, "Enable Siren (Mode 2)"},
-	{k_s_3, KEY_PAD_3, "Enable Siren (Mode 3)"},
+	{k_el_on, KEY_PAD_ENTER, "bind.emergency_lights"},
+	{k_el_switch, KEY_PAD_DECIMAL, "bind.emergency_lights_mode"},
+	{k_s_off, KEY_PAD_0, "bind.siren_disable"},
+	{k_s_1, KEY_PAD_1, "bind.siren_mode_1"},
+	{k_s_2, KEY_PAD_2, "bind.siren_mode_2"},
+	{k_s_3, KEY_PAD_3, "bind.siren_mode_3"},
 }
 
 local function Binder( x, y, tbl, num, parent)
@@ -75,7 +89,7 @@ local function Binder( x, y, tbl, num, parent)
 	TextLabel:SetPos( x, y )
 	TextLabel:SetSize( 300, sizey )
 	TextLabel.Paint = function()
-		draw.SimpleText( kentry[3], "DSimfphysFont", 300 * 0.5, sizey * 0.5, Color( 100, 100, 100, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER ) 
+		draw.SimpleText( L(kentry[3]), "DSimfphysFont", 300 * 0.5, sizey * 0.5, Color( 100, 100, 100, 255 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER ) 
 	end
 	
 	return binder
@@ -90,7 +104,7 @@ local function BuildMenu( self )
 
 	local box_ass_enabled = vgui.Create( "DCheckBoxLabel", self.PropPanel)
 	box_ass_enabled:SetPos( 25,25 )
-	box_ass_enabled:SetText( ConVar_ASS_Enabled:GetHelpText() )
+	box_ass_enabled:SetText( L("settings.ass_enabled") )
 	box_ass_enabled:SetConVar( ConVar_ASS_Enabled:GetName() )
 	box_ass_enabled:SetValue( ConVar_ASS_Enabled:GetInt() )
 	box_ass_enabled:SizeToContents()
@@ -98,7 +112,7 @@ local function BuildMenu( self )
 	local slider_ass_degree = vgui.Create( "DNumSlider", self.PropPanel)
 	slider_ass_degree:SetPos( 30,55 )
 	slider_ass_degree:SetSize( 500,20 )
-	slider_ass_degree:SetText( ConVar_ASS_Degree:GetHelpText() )
+	slider_ass_degree:SetText( L("settings.ass_degree") )
 	slider_ass_degree:SetMin( ConVar_ASS_Degree:GetMin() )
 	slider_ass_degree:SetMax( ConVar_ASS_Degree:GetMax() )
 	slider_ass_degree:SetDecimals( 0 )
@@ -108,7 +122,7 @@ local function BuildMenu( self )
 	local slider_ass_smoothness = vgui.Create( "DNumSlider", self.PropPanel)
 	slider_ass_smoothness:SetPos( 30,75 )
 	slider_ass_smoothness:SetSize( 500, 20 )
-	slider_ass_smoothness:SetText( ConVar_ASS_Smoothness:GetHelpText() )
+	slider_ass_smoothness:SetText( L("settings.ass_smoothness") )
 	slider_ass_smoothness:SetMin( ConVar_ASS_Smoothness:GetMin() )
 	slider_ass_smoothness:SetMax( ConVar_ASS_Smoothness:GetMax() )
 	slider_ass_smoothness:SetDecimals( 2 )
@@ -117,7 +131,7 @@ local function BuildMenu( self )
 	
 	local reset_ass = vgui.Create( "DButton" )
 	reset_ass:SetParent( self.PropPanel )
-	reset_ass:SetText( "Reset" )
+	reset_ass:SetText( L("common.reset") )
 	reset_ass:SetPos( 25, 105 )
 	reset_ass:SetSize( 500, 25 )
 	reset_ass.DoClick = function()
@@ -138,7 +152,7 @@ local function BuildMenu( self )
 	
 	local box_gss_enabled = vgui.Create( "DCheckBoxLabel", self.PropPanel)
 	box_gss_enabled:SetPos( 25,25+125 )
-	box_gss_enabled:SetText( ConVar_GSS_Enabled:GetHelpText() )
+	box_gss_enabled:SetText( L("settings.gss_enabled") )
 	box_gss_enabled:SetConVar( ConVar_GSS_Enabled:GetName() )
 	box_gss_enabled:SetValue( ConVar_GSS_Enabled:GetInt() )
 	box_gss_enabled:SizeToContents()
@@ -157,7 +171,7 @@ local function BuildMenu( self )
 	
 	local ResetButton = vgui.Create( "DButton" )
 	ResetButton:SetParent( self.PropPanel )
-	ResetButton:SetText( "Reset" )
+	ResetButton:SetText( L("common.reset") )
 	ResetButton:SetPos( 25, yy + 10 )
 	ResetButton:SetSize( 500, 25 )
 	ResetButton.DoClick = function()
@@ -190,7 +204,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	
 	DFrame:SetPos(pos_x, pos_y)
 	DFrame:SetSize(size_x, size_y)
-	DFrame:SetTitle("Change Route")
+	DFrame:SetTitle(L("routes.change_route"))
 	DFrame:MakePopup()
 	
 	local DPanel = vgui.Create("DPanel", DFrame)
@@ -201,7 +215,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	
 	local Num_Label = vgui.Create("DLabel", DPanel)
 	Num_Label:Dock(LEFT)
-	Num_Label:SetText("Route Number")
+	Num_Label:SetText(L("routes.route_number"))
 	Num_Label:SizeToContents()
 	
 	local Num_Text = vgui.Create("DTextEntry", DPanel)
@@ -216,7 +230,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	
 	local Let_Label = vgui.Create("DLabel", DPanel)
 	Let_Label:Dock(LEFT)
-	Let_Label:SetText("Route Letter")
+	Let_Label:SetText(L("routes.route_letter"))
 	Let_Label:SizeToContents()
 	
 	local Let_Text = vgui.Create("DTextEntry", DPanel)
@@ -230,7 +244,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	
 	local Route1_Label = vgui.Create("DLabel", DFrame)
 	Route1_Label:Dock(TOP)
-	Route1_Label:SetText("First Route")
+	Route1_Label:SetText(L("routes.first_route"))
 	
 	local Route1_Text = vgui.Create("DTextEntry", DFrame)
 	Route1_Text:Dock(TOP)
@@ -243,7 +257,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	
 	local Route2_Label = vgui.Create("DLabel", DFrame)
 	Route2_Label:Dock(TOP)
-	Route2_Label:SetText("Last Route")
+	Route2_Label:SetText(L("routes.last_route"))
 	
 	local Route2_Text = vgui.Create("DTextEntry", DFrame)
 	Route2_Text:Dock(TOP)
@@ -256,7 +270,7 @@ local function OpenRoutesMenu(v) --- Routes Menu
 	local Change_Button = vgui.Create("DButton", DFrame)
 	Change_Button:DockMargin(50, 0, 50, 0)
 	Change_Button:Dock(BOTTOM)
-	Change_Button:SetText("Change")
+	Change_Button:SetText(L("common.change"))
 	
 	Change_Button.DoClick = function()
 		net.Start( "Simfphys_Routes_Menu" )
